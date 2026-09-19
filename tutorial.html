@@ -240,6 +240,21 @@ td:first-child { font-weight: 700; white-space: nowrap; }
   .paso__n { width: 34px; height: 34px; font-size: 0.95rem; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ---------- Impresión / PDF ---------- */
+@page { size: A4; margin: 14mm 12mm 16mm; }
+@media print {
+  body { padding-inline: 0; font-size: 10.5pt; }
+  .pagina { max-width: none; padding-block: 0; }
+  .indice { break-inside: avoid; }
+  .indice a { color: var(--papel); }
+  h2 { break-after: avoid; }
+  .seccion { break-inside: auto; }
+  .paso, .pantalla, .nota, .mapa, .tabla-envoltura, .direccion, .checklist li { break-inside: avoid; }
+  .pantalla { box-shadow: none; }
+  a { text-decoration: none; }
+  .pie { break-before: avoid; }
+}
 </style>
 </head>
 <body>
@@ -269,7 +284,9 @@ td:first-child { font-weight: 700; white-space: nowrap; }
     <li><a href="#publica">Publica tu copia en internet</a></li>
     <li><a href="#cambio">Tu primer cambio: un precio</a></li>
     <li><a href="#fotos">Sube tus fotos</a></li>
+    <li><a href="#imagenes">Qué imágenes hay y cuáles faltan</a></li>
     <li><a href="#codex">Pídele cambios grandes a Codex</a></li>
+    <li><a href="#codex-pc">Codex en el computador</a></li>
     <li><a href="#rompe">Si algo se rompe</a></li>
     <li><a href="#mover">Cómo se mueven las cosas</a></li>
     <li><a href="#nunca">Lo que nunca se sube</a></li>
@@ -656,6 +673,81 @@ td:first-child { font-weight: 700; white-space: nowrap; }
   </div>
 </section>
 
+<!-- ===================== 6b. ESTADO DE LAS IMÁGENES ===================== -->
+<section class="seccion" id="imagenes">
+  <div class="seccion__cab"><h2>Qué imágenes hay y cuáles faltan</h2><span class="tiempo">3 min de lectura</span></div>
+  <p>Hoy la página tiene seis archivos de imagen y <strong>todos salen de la misma ilustración de la marca</strong>. Ninguna es una foto real de tus paltas. Esta tabla dice qué hay en cada lugar, qué le falta y cómo se cambia.</p>
+
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th>Archivo</th><th>Qué hay hoy</th><th>Qué falta</th><th>Cómo se cambia</th></tr></thead>
+    <tbody>
+      <tr><td><code>portada.jpg</code></td><td>La ilustración del puesto, con el pizarrón y los precios</td><td>Nada urgente. Si algún día quieres una foto real del campo, va aquí.</td><td>Subes la foto nueva con ese mismo nombre y reemplaza a la vieja</td></tr>
+      <tr><td><code>logo.png</code></td><td>La palta con lentes, en la barra de arriba</td><td>Nada</td><td>No se toca</td></tr>
+      <tr><td><code>marca.png</code></td><td>El sticker completo, en la sección "El campo"</td><td><strong>Tu foto en el campo</strong>. Esta es la que más falta.</td><td>Subes <code>marite.jpg</code> y cambias una línea en datos.js, explicado abajo</td></tr>
+      <tr><td><code>palta-kilo.jpg</code></td><td>Recorte del dibujo: una palta cortada</td><td>Foto real de un kilo como lo entregas</td><td>Subes la foto con ese mismo nombre</td></tr>
+      <tr><td><code>malla-3kg.jpg</code></td><td>Recorte del dibujo: paltas enteras</td><td>Foto real de la malla armada</td><td>Subes la foto con ese mismo nombre</td></tr>
+      <tr><td><code>caja-10kg.jpg</code></td><td>Recorte del dibujo: el cajón de madera</td><td>Foto real de la caja llena</td><td>Subes la foto con ese mismo nombre</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="nota nota--bien">
+    <strong>La regla que resuelve casi todo</strong>
+    Si subes una imagen <strong>con el mismo nombre</strong> que una que ya está, la nueva reemplaza a la vieja y no hay que tocar nada más. Por eso conviene renombrar la foto en el celular antes de subirla.
+  </div>
+
+  <h3 style="margin-top:28px">Activar tu foto en el campo</h3>
+  <p>Es la única que necesita dos pasos, porque hoy en ese lugar está el sticker y la página tiene que saber que ahora quieres mostrar otra cosa.</p>
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo"><h3>Sube <code>marite.jpg</code> a la carpeta fotos</h3><p>Igual que cualquier foto: Add file, Upload files, Commit changes.</p></div>
+  </div>
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo"><h3>Cambia una línea en <code>datos.js</code></h3><p>Busca el bloque que empieza con <code>historia:</code>. Adentro hay una línea que dice <code>foto: "marca.png"</code>. Cámbiala por <code>foto: "marite.jpg"</code>, guarda con Commit changes, y en un minuto aparece tu foto.</p>
+    <div class="pantalla"><div class="gh-cuerpo"><div class="gh-codigo">  historia: {
+    titulo: "Quién está detrás de estas paltas",
+    firma: "Marité",
+    foto: <mark>"marite.jpg"</mark>,
+    fotoDescripcion: "Marité en el campo, entre los paltos"
+  },</div></div><div class="pantalla__pie">Solo cambia el nombre entre comillas. Las comillas se quedan.</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px">Agregar una imagen que no está en la lista</h3>
+  <p>Por ejemplo, un producto nuevo con su propia foto. Son tres pasos y ninguno es nuevo:</p>
+  <ol>
+    <li>Nómbrala en minúscula, sin espacios ni tildes: <code>palta-negra.jpg</code>.</li>
+    <li>Súbela a la carpeta <code>fotos</code> con Add file, Upload files.</li>
+    <li>En <code>datos.js</code>, en el bloque del producto, escribe <code>foto: "palta-negra.jpg"</code>. Si el producto también es nuevo, primero copia un bloque completo y pégalo debajo, como dice la guía.</li>
+  </ol>
+  <p style="margin-top:12px">Si la imagen es para un lugar que hoy no existe, por ejemplo una sección de recetas, primero súbela a <code>fotos</code> y después pídele a Codex: "usa la imagen fotos/recetas.jpg en la sección de recetas". Codex puede acomodarla, pero subirla te toca a ti.</p>
+
+  <h3 style="margin-top:28px">JPG o PNG</h3>
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th>Si es</th><th>Guárdala como</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>Una foto</td><td><code>.jpg</code></td><td>Pesa menos. Los celulares ya las guardan así.</td></tr>
+      <tr><td>Un dibujo o logo sin fondo</td><td><code>.png</code></td><td>Es el único formato que guarda la transparencia.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="nota nota--ojo">
+    <strong>Lo que pasó con el logo, para que no se repita</strong>
+    El dibujo de la palta llegó "sin fondo" pero guardado como JPG. El JPG no sabe de transparencia, así que en vez del fondo transparente venía dibujado un cuadriculado gris, y hubo que limpiarlo a mano. Si te mandan un logo o un sticker sin fondo, pide que sea PNG.
+  </div>
+
+  <h3 style="margin-top:28px">Si una imagen no aparece</h3>
+  <ul>
+    <li><strong>El nombre no calza.</strong> Revisa mayúsculas y extensión: <code>Foto.JPG</code> no es lo mismo que <code>foto.jpg</code>.</li>
+    <li><strong>Todavía no termina de publicarse.</strong> Espera un minuto y recarga.</li>
+    <li><strong>Pesa demasiado.</strong> Sobre 2 MB tarda tanto en cargar que parece que no está. Achícala en squoosh.app.</li>
+    <li><strong>Sigue el recuadro rayado.</strong> Ese recuadro dice exactamente qué nombre está esperando la página. Compáralo letra por letra con el archivo que subiste.</li>
+  </ul>
+</section>
+
 <!-- ===================== 7. CODEX ===================== -->
 <section class="seccion" id="codex">
   <div class="seccion__cab"><h2>Pídele cambios grandes a Codex</h2><span class="tiempo">10 min la primera vez</span></div>
@@ -717,6 +809,107 @@ td:first-child { font-weight: 700; white-space: nowrap; }
   <div class="nota nota--gris">
     <strong>Un consejo honesto</strong>
     Para cambiar un precio, no uses Codex. Editar el archivo a mano son tres clics; con Codex son tres clics más una propuesta que revisar. Codex es para lo que no sabes hacer sola. Y si algo se pone difícil, Miguel puede hacerlo por ti en menos tiempo del que tardas en explicárselo a una máquina.
+  </div>
+
+  <h3 style="margin-top:32px">Cómo pedirle bien</h3>
+  <p>Codex hace lo que entiende, no lo que quisiste decir. La diferencia entre un buen resultado y uno malo está casi siempre en cómo se lo pediste. Siete reglas que funcionan:</p>
+  <ol>
+    <li><strong>Una cosa por pedido.</strong> "Agrega recetas" y "cambia los colores" son dos pedidos, no uno. Si los juntas y algo sale mal, no sabes cuál fue.</li>
+    <li><strong>Di dónde.</strong> Usa el nombre de la sección tal como se ve en la página: "después de Por qué estas paltas", "en el pie de página".</li>
+    <li><strong>Di cómo debería verse.</strong> "Igual que las tarjetas de productos", "con el mismo verde de los botones". Codex puede mirar la página y copiar el estilo.</li>
+    <li><strong>Pide que los textos queden en datos.js.</strong> Así después los cambias tú sin volver a pedirle nada. Es la frase más útil que puedes agregar.</li>
+    <li><strong>Di lo que no debe tocar.</strong> "No cambies los precios ni el WhatsApp". Evita sorpresas.</li>
+    <li><strong>Pídele que te cuente qué hizo.</strong> "Al final explícame en tres líneas qué cambiaste y en qué archivos".</li>
+    <li><strong>Pruébalo en tu copia, nunca en la oficial.</strong> Y si no le achuntó, no repitas lo mismo con más mayúsculas: descríbelo de otra forma, o avísale a Miguel.</li>
+  </ol>
+
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th>Así no</th><th>Así sí</th></tr></thead>
+    <tbody>
+      <tr><td>"Mejora la página"</td><td>"Haz que el título de la portada sea un poco más chico en el celular, para que quepa en tres líneas"</td></tr>
+      <tr><td>"Pon recetas"</td><td>"Agrega una sección Recetas con palta después de Por qué estas paltas, con tres recetas cortas. Los textos van en datos.js. No toques precios ni WhatsApp"</td></tr>
+      <tr><td>"Cambia los colores"</td><td>"Cambia el verde de los botones por un café como el del cuesco, en toda la página, sin tocar el resto"</td></tr>
+      <tr><td>"Arregla lo que está malo"</td><td>"La página sale en blanco desde mi último cambio en datos.js. Encuentra el error y déjalo como estaba"</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="nota nota--bien">
+    <strong>Recomendación corta</strong>
+    Nube para todo lo que puedas, porque trabaja directo sobre tu copia en GitHub y no hay que instalar nada. El computador solo cuando quieras ver el cambio antes de publicarlo. Eso se explica en la siguiente sección.
+  </div>
+</section>
+
+<!-- ===================== 7b. CODEX EN EL COMPUTADOR ===================== -->
+<section class="seccion" id="codex-pc">
+  <div class="seccion__cab"><h2>Codex en el computador</h2><span class="tiempo">15 min la primera vez</span></div>
+  <p>Todo lo anterior fue Codex "en la nube": entra desde el navegador y trabaja directo sobre tu copia en GitHub. Existe también dentro de la <strong>app de ChatGPT para computador</strong>, en Windows y Mac. Ahí trabaja sobre una carpeta que tengas en tu equipo.</p>
+  <p>La diferencia importa por una razón: en el computador puedes <strong>ver el resultado al tiro, antes de publicar nada</strong>, haciendo doble clic en el archivo de la página. En la nube el cambio lo ves recién cuando lo apruebas.</p>
+
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th></th><th>Codex en la nube</th><th>Codex en el computador</th></tr></thead>
+    <tbody>
+      <tr><td>Hay que instalar</td><td>Nada</td><td>La app de ChatGPT</td></tr>
+      <tr><td>Trabaja sobre</td><td>Tu copia en GitHub</td><td>Una carpeta en tu equipo</td></tr>
+      <tr><td>Ves el resultado</td><td>Después de aprobar</td><td>Al tiro, con doble clic en index.html</td></tr>
+      <tr><td>Se publica con</td><td>Merge pull request</td><td>Subiendo los archivos cambiados a GitHub</td></tr>
+      <tr><td>Conviene para</td><td>Partir, y para el día a día</td><td>Probar cambios grandes antes de mostrarlos</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>Instala la app de ChatGPT y entra con tu cuenta</h3>
+      <p>Se descarga desde <a href="https://chatgpt.com">chatgpt.com</a>. Es la misma cuenta que usaste para Codex en la nube. Dentro de la app hay una sección Codex.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Ten la carpeta de tu copia en el computador</h3>
+      <p>En la página principal de tu copia en GitHub, el botón verde <span class="tecla tecla--verde">Code</span> tiene la opción <strong>Download ZIP</strong>. Descárgalo, descomprímelo y déjalo en un lugar fácil de encontrar, por ejemplo en Documentos con el nombre <code>mi-tienda-de-paltas</code>.</p>
+      <p>Si Codex te ofrece "clonar" el repositorio, es lo mismo pero hecho por él: acepta y elige dónde guardarlo.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Abre Codex, elige esa carpeta y pide igual que siempre</h3>
+      <p>Las mismas siete reglas de la sección anterior. Codex cambia los archivos dentro de la carpeta y te muestra qué tocó.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">4</div>
+    <div class="paso__cuerpo">
+      <h3>Mira el resultado antes de publicar</h3>
+      <p>Haz doble clic en <code>index.html</code> dentro de la carpeta. Se abre en tu navegador con los cambios, aunque todavía no estén en internet. Si no te gusta, le dices a Codex qué cambiar y vuelves a mirar. Nadie más lo ve mientras tanto.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">5</div>
+    <div class="paso__cuerpo">
+      <h3>Publica subiendo lo que cambió</h3>
+      <p>Codex suele ofrecerte subir los cambios a GitHub por ti, como una propuesta. Si lo hace, acepta y apruébala en la pestaña Pull requests igual que en la nube.</p>
+      <p>Si no te lo ofrece, lo haces a mano: en GitHub entras a tu copia, <span class="tecla">Add file</span>, <span class="tecla">Upload files</span>, y arrastras los archivos que Codex te dijo que cambió. Como tienen el mismo nombre, reemplazan a los anteriores. Commit changes, y en un minuto está publicado.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--ojo">
+    <strong>El detalle que más confunde</strong>
+    Después de trabajar en el computador, la carpeta de tu equipo y tu copia en GitHub <strong>ya no son iguales</strong> hasta que subas los archivos. Y al revés: si después editas un precio directo en GitHub, la carpeta del computador queda vieja. Regla simple: antes de una sesión en el computador, baja el ZIP de nuevo. Es un minuto y evita pisar cambios.
+  </div>
+
+  <div class="nota nota--gris">
+    <strong>Qué haría yo en tu lugar</strong>
+    Los primeros meses, todo en la nube y a mano en GitHub. El computador cuando Miguel esté contigo o cuando quieras hacer un cambio grande con calma y verlo antes. No hay que aprender las dos formas de una vez.
   </div>
 </section>
 
@@ -862,6 +1055,7 @@ td:first-child { font-weight: 700; white-space: nowrap; }
     <li><label><input type="checkbox" id="c6"><span>Probé el botón Pedir por WhatsApp y me llegó el mensaje</span></label></li>
     <li><label><input type="checkbox" id="c7"><span>Cambié un precio y lo vi actualizado en la página</span></label></li>
     <li><label><input type="checkbox" id="c8"><span>Subí al menos una foto real</span></label></li>
+    <li><label><input type="checkbox" id="c12"><span>Subí mi foto en el campo y cambié la línea de marca.png por marite.jpg</span></label></li>
     <li><label><input type="checkbox" id="c9"><span>Escribí mi historia en datos.js</span></label></li>
     <li><label><input type="checkbox" id="c10"><span>Le mandé mi dirección a alguien para que opine</span></label></li>
     <li><label><input type="checkbox" id="c11"><span>Conecté Codex a mi copia y le pedí algo chico para probar</span></label></li>
