@@ -66,10 +66,20 @@ Busca el producto y cambia solo el número:
 {
   nombre: "Malla de paltas",
   formato: "3 kilos",
-  precio: 12000,          <-- cambias esto por el precio nuevo
+  precio: 7500,           <-- cambias esto por el precio nuevo
   ...
 }
 ```
+
+### Ojo con el precio del despacho
+
+El valor del despacho aparece escrito en dos lugares y hay que cambiarlo
+en los dos para que no se contradigan:
+
+1. En el bloque `despacho`, la línea `texto`
+2. En el bloque `despacho`, dentro de `zonas`, la de Melipilla
+
+Busca la palabra `despacho` en el archivo y los vas a encontrar juntos.
 
 ---
 
