@@ -241,6 +241,7 @@
                      DATOS.tienda.ubicacion.split(',')[0];
     rellenar('nombre', DATOS.tienda.nombre);
     rellenar('ubicacion', DATOS.tienda.ubicacion);
+    if (DATOS.eslogan) rellenar('eslogan', DATOS.eslogan);
 
     /* --- Portada --- */
     rellenar('sello', DATOS.portada.sello);

@@ -39,19 +39,19 @@ var DATOS = {
   portada: {
 
     // El sello verde chico que va arriba del título
-    sello: "Sin pesticidas · Cosecha a pedido",
+    sello: "Sin pesticidas · Orgánicas · Melipilla",
 
     // El título grande. La palabra entre *asteriscos* sale destacada.
-    titulo: "Paltas *de verdad*, criadas sin apuro en Melipilla.",
+    titulo: "Buenas paltas, *mejores días*.",
 
     // Las dos frases que van debajo del título
-    bajada: "Cultivadas sin pesticidas y cosechadas después de que haces tu pedido. Llegan a tu casa en Santiago o la Quinta Región en pocos días.",
+    bajada: "Frescas, naturales y con mucho amor. Cultivadas sin pesticidas en Melipilla y cosechadas después de que haces tu pedido.",
 
     // La foto grande. Ponla en la carpeta fotos/ y escribe aquí su nombre.
     foto: "portada.jpg",
 
     // Qué se ve en la foto. Sirve para personas ciegas y para Google.
-    fotoDescripcion: "Paltas recién cosechadas en un canasto"
+    fotoDescripcion: "Puesto de Paltas Marité con el precio del kilo y paltas recién cosechadas"
   },
 
   /* ------------------------------------------------------------------
@@ -67,29 +67,29 @@ var DATOS = {
     {
       nombre: "Palta Hass",
       formato: "1 kilo",
-      detalle: "Calibre 48. Entre 4 y 5 unidades. Para probar o para la semana de una persona.",
-      precio: 4500,
+      detalle: "Entre 4 y 5 unidades según el tamaño. Para probar o para la semana de una persona.",
+      precio: 2500,
       foto: "palta-kilo.jpg",
       disponible: true,
-      destacado: false
+      destacado: true,          // true pone el sello de abajo
+      etiqueta: "La más pedida"
     },
 
     {
       nombre: "Malla de paltas",
       formato: "3 kilos",
-      detalle: "Calibre 48 y 60 mezclados, en distintos puntos de madurez para que te duren toda la semana.",
-      precio: 12000,
+      detalle: "En distintos puntos de madurez para que te duren toda la semana.",
+      precio: 7500,
       foto: "malla-3kg.jpg",
       disponible: true,
-      destacado: true,          // true pone el sello "La más pedida"
-      etiqueta: "La más pedida"
+      destacado: false
     },
 
     {
       nombre: "Caja de paltas",
       formato: "10 kilos",
-      detalle: "Calibre a elección. Para familias grandes, cocinerías o para repartir entre vecinos.",
-      precio: 35000,
+      detalle: "Para familias grandes, cocinerías o para repartir entre vecinos.",
+      precio: 25000,
       foto: "caja-10kg.jpg",
       disponible: true,
       destacado: false
@@ -98,7 +98,7 @@ var DATOS = {
   ],
 
   // Aviso chico que sale al lado del título del catálogo
-  avisoCatalogo: "Se cosecha después de tu pedido · Precios por confirmar",
+  avisoCatalogo: "Cosechadas a pedido · El despacho se suma aparte",
 
   /* ------------------------------------------------------------------
      4. POR QUÉ ESTAS PALTAS
@@ -122,6 +122,9 @@ var DATOS = {
     }
   ],
 
+  // Frase que acompaña a la marca. Sale bajo el nombre en el pie de página.
+  eslogan: "Paltas felices, personas más sanas",
+
   /* ------------------------------------------------------------------
      5. TU HISTORIA
      Esta es la parte que más vende. Escríbela con tus propias palabras.
@@ -135,8 +138,11 @@ var DATOS = {
 
     firma: "Marité",
     firmaDetalle: "Melipilla",
-    foto: "marite.jpg",
-    fotoDescripcion: "Marité en el campo, entre los paltos"
+
+    // Por ahora va el dibujo de la marca. Cuando tengas una foto tuya en
+    // el campo, guárdala en fotos/ y cambia esta línea por su nombre.
+    foto: "marca.png",
+    fotoDescripcion: "Dibujo de la marca Paltas Marité"
   },
 
   /* ------------------------------------------------------------------
@@ -144,12 +150,12 @@ var DATOS = {
      ------------------------------------------------------------------ */
   despacho: {
     titulo: "Dónde llegamos",
-    texto: "Despachamos a Santiago y a la Región de Valparaíso. Cada entrega se coordina por WhatsApp: acordamos día, lugar y costo del despacho antes de que pagues.",
+    texto: "El kilo sale $2.500 retirado y $3.500 con despacho. Fuera de Melipilla coordinamos el valor por WhatsApp según tu comuna.",
 
     zonas: [
       {
         nombre: "Melipilla y alrededores",
-        detalle: "Entrega en el día o al día siguiente. También puedes retirar en el campo avisando antes."
+        detalle: "Despacho a $1.000. Entrega en el día o al día siguiente, o retiras en el campo avisando antes."
       },
       {
         nombre: "Santiago",

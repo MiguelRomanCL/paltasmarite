@@ -1,16 +1,33 @@
 FOTOS DE LA PÁGINA
 ==================
 
-Aquí van todas las fotos. Estas son las que la página está esperando:
+QUÉ HAY AHORA
+-------------
 
-  portada.jpg     La mejor foto que tengas. Paltas en el árbol o en canasto.
-  palta-kilo.jpg  Unas pocas paltas juntas.
-  malla-3kg.jpg   La malla armada como se la entregas al cliente.
-  caja-10kg.jpg   La caja llena.
-  marite.jpg      Tú en el campo, entre los paltos.
+  portada.jpg     La ilustración de la marca, con el pizarrón y los precios
+  logo.png        La palta con lentes, recortada. Va en la barra de arriba
+  marca.png       El sticker completo. Va en la sección "El campo"
+  palta-kilo.jpg  Recorte de la ilustración: una palta cortada
+  malla-3kg.jpg   Recorte de la ilustración: paltas enteras
+  caja-10kg.jpg   Recorte de la ilustración: el cajón de madera
 
-Mientras una foto no esté, la página muestra un recuadro rayado que dice
-cuál falta. No se ve rota, solo incompleta.
+
+LO QUE CONVIENE CAMBIAR CUANDO PUEDAS
+-------------------------------------
+
+Las tres fotos de los productos son recortes del mismo dibujo. Sirven
+para partir y se ven bien, pero una foto real de tus paltas vende más
+que cualquier ilustración. La gente quiere ver lo que va a recibir.
+
+Cuando puedas, reemplaza estas tres por fotos de verdad:
+
+  palta-kilo.jpg  Un kilo de paltas, como se lo entregas al cliente
+  malla-3kg.jpg   La malla de 3 kilos armada
+  caja-10kg.jpg   La caja de 10 kilos llena
+
+Y agrega una foto tuya en el campo. Guárdala como marite.jpg y en
+datos.js, dentro del bloque "historia", cambia la línea que dice
+foto: "marca.png" por foto: "marite.jpg"
 
 
 CÓMO NOMBRAR LOS ARCHIVOS
@@ -23,6 +40,9 @@ Todo en minúscula, sin espacios, sin tildes y sin eñes.
 
 El nombre que pongas aquí tiene que ser idéntico al que escribes en datos.js
 
+Si le pones a la foto nueva el mismo nombre que la que ya está, no hay
+que tocar datos.js: se reemplaza sola.
+
 
 CONSEJOS PARA SACARLAS
 ----------------------
@@ -31,7 +51,6 @@ CONSEJOS PARA SACARLAS
 - Acerca la cámara. Que la palta llene la foto.
 - Una palta cortada por la mitad vende más que diez enteras.
 - Fondo simple: una tabla de madera, un paño, la tierra del campo.
-- Para la portada, saca la foto horizontal (el teléfono de lado).
 - Para tu foto en el campo, que se vean los paltos detrás.
 
 
@@ -40,4 +59,4 @@ SI LAS FOTOS PESAN MUCHO
 
 Una foto de celular puede pesar 5 MB y hace lenta la página. Achícalas
 en squoosh.app (es gratis y no hay que instalar nada). Deja cada foto
-en menos de 500 KB.
+en menos de 300 KB.

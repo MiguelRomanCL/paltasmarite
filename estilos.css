@@ -144,6 +144,12 @@ a { color: var(--pulpa-texto); }
   margin-right: auto;
 }
 
+.marca__logo {
+  width: auto;
+  height: 40px;
+  flex-shrink: 0;
+}
+
 .marca__nombre {
   font-family: 'Bricolage Grotesque', sans-serif;
   font-size: var(--paso-1);
@@ -174,7 +180,7 @@ a { color: var(--pulpa-texto); }
 @media (max-width: 430px) {
   .barra__interior .boton { padding: 8px 12px; }
   .marca__nombre { font-size: var(--paso-0); }
-  .marca svg { width: 26px; height: 26px; }
+  .marca__logo { height: 32px; }
 }
 
 /* --------------------------------------------------------------------------
@@ -282,13 +288,12 @@ a { color: var(--pulpa-texto); }
 
 .portada__acciones { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* La foto se recorta con una forma orgánica, como el contorno de una palta */
-/* La foto se recorta con la silueta de una palta: angosta arriba,
-   ancha y redonda abajo. */
+/* Cuadrada y sin máscara: la ilustración de la marca se ve entera,
+   con sus letreros y sus precios legibles. */
 .portada__foto {
   position: relative;
-  aspect-ratio: 5 / 6.4;
-  border-radius: 46% 54% 50% 50% / 64% 62% 40% 38%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
   overflow: hidden;
   background: var(--papel-2);
   box-shadow: var(--sombra);
@@ -298,7 +303,7 @@ a { color: var(--pulpa-texto); }
 
 @media (max-width: 860px) {
   .portada__grid { grid-template-columns: 1fr; }
-  .portada__foto { aspect-ratio: 4 / 3; border-radius: 28px; order: -1; }
+  .portada__foto { order: -1; }
 }
 
 /* --------------------------------------------------------------------------
@@ -635,13 +640,15 @@ a { color: var(--pulpa-texto); }
 }
 
 .historia__foto {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   border-radius: 20px;
   overflow: hidden;
-  background: rgba(251, 250, 245, .12);
+  background: rgba(251, 250, 245, .10);
+  padding: 10px;
 }
 
-.historia__foto img { width: 100%; height: 100%; object-fit: cover; }
+/* contain y no cover: así nunca se recorta una cara ni se corta el dibujo */
+.historia__foto img { width: 100%; height: 100%; object-fit: contain; }
 
 .historia__texto { display: flex; flex-direction: column; gap: 18px; }
 
@@ -673,7 +680,7 @@ a { color: var(--pulpa-texto); }
 
 @media (max-width: 860px) {
   .historia__grid { grid-template-columns: 1fr; }
-  .historia__foto { aspect-ratio: 4 / 3; }
+  .historia__foto { aspect-ratio: 4 / 3.4; }
 }
 
 /* --------------------------------------------------------------------------
@@ -793,6 +800,13 @@ a { color: var(--pulpa-texto); }
   font-size: var(--paso-1);
   font-weight: 800;
   letter-spacing: -0.03em;
+}
+
+.pie__eslogan {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-0);
+  color: var(--pulpa-texto);
+  margin-top: 2px;
 }
 
 .pie__detalle {
