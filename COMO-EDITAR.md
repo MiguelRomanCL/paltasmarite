@@ -171,13 +171,31 @@ texto: "Primer párrafo.\nSegundo párrafo.",
 
 ## Publicar los cambios en internet
 
-1. Entra a [app.netlify.com](https://app.netlify.com) con tu cuenta
-2. Entra a tu sitio
-3. Anda a la pestaña **Deploys**
-4. Arrastra la carpeta completa al recuadro que dice *Drag and drop your site folder here*
-5. Espera unos segundos. Listo, ya está en línea.
+Tu página vive en GitHub y está publicada acá:
 
-Los cambios tardan menos de un minuto en verse.
+**https://miguelromancl.github.io/paltasmarite/**
+
+La forma más simple de cambiar algo es editar directo en GitHub, desde el
+navegador. Sirve igual en el computador que en el celular, y no hay que
+instalar nada.
+
+1. Entra a [github.com/MiguelRomanCL/paltasmarite](https://github.com/MiguelRomanCL/paltasmarite)
+2. Haz clic en el archivo `datos.js`
+3. Aprieta el lápiz que dice **Edit**
+4. Cambia lo que necesites
+5. Aprieta **Commit changes** y escribe en una línea qué cambiaste
+
+**No hay que publicar nada aparte.** La página se actualiza sola en menos
+de un minuto.
+
+Si prefieres trabajar con los archivos en tu computador, edítalos ahí y
+súbelos después a GitHub. El resultado es el mismo.
+
+### Si algo sale mal
+
+GitHub guarda todas las versiones. Entra a la pestaña **Commits** del
+repositorio, busca la versión anterior y se puede volver atrás. Nunca se
+pierde nada.
 
 ---
 
