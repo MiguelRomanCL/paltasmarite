@@ -1,0 +1,814 @@
+/* ==========================================================================
+   PALTAS MARITÉ — ESTILOS
+   Este archivo define cómo se ve la página: colores, letras y espacios.
+   No necesitas tocarlo para cambiar textos o precios. Eso va en datos.js
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. LA PALETA
+   Los colores salen de la propia palta: la cáscara oscura del Hass maduro,
+   la pulpa verde amarilla y el café rosado del cuesco.
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --papel:        #FBFAF5;   /* fondo principal, hueso cálido */
+  --papel-2:      #F1F0E5;   /* fondo de secciones alternadas */
+  --papel-3:      #E6E5D6;   /* bordes y separadores */
+
+  --tinta:        #17200F;   /* texto principal, cáscara de Hass madura */
+  --tinta-suave:  #55604C;   /* texto secundario, gris con sesgo oliva */
+
+  --pulpa:        #BFD03F;   /* acento principal, verde amarillo de la pulpa */
+  --pulpa-texto:  #5E6B10;   /* el mismo verde, oscurecido para texto */
+  --cuesco:       #A96B47;   /* acento cálido, café del carozo */
+  --hoja:         #253A1A;   /* verde profundo para fondos oscuros */
+
+  --whatsapp:     #25D366;
+  --whatsapp-ink: #07240F;
+
+  --sombra: 0 1px 2px rgba(23, 32, 15, .05), 0 8px 24px rgba(23, 32, 15, .06);
+
+  /* Escala tipográfica */
+  --paso--1: 0.875rem;
+  --paso-0:  1.0625rem;
+  --paso-1:  1.25rem;
+  --paso-2:  1.5rem;
+  --paso-3:  2rem;
+  --paso-4:  2.75rem;
+  --paso-5:  clamp(2.75rem, 7vw, 5.25rem);
+
+  --ancho: 1180px;
+  --gutter: clamp(20px, 5vw, 64px);
+}
+
+/* --------------------------------------------------------------------------
+   2. BASES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: 'Karla', ui-sans-serif, system-ui, 'Segoe UI', sans-serif;
+  font-size: var(--paso-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: 'Bricolage Grotesque', 'Karla', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  margin: 0;
+}
+
+p { margin: 0; }
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--pulpa-texto); }
+
+:focus-visible {
+  outline: 3px solid var(--cuesco);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.envoltura {
+  width: 100%;
+  max-width: var(--ancho);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.etiqueta {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pulpa-texto);
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. BARRA SUPERIOR
+   -------------------------------------------------------------------------- */
+.barra {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: rgba(251, 250, 245, .88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--papel-3);
+}
+
+.barra__interior {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-block: 14px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  margin-right: auto;
+}
+
+.marca__nombre {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-1);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.navegacion {
+  display: flex;
+  gap: 26px;
+}
+
+.navegacion a {
+  color: var(--tinta-suave);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--paso--1);
+}
+
+.navegacion a:hover { color: var(--tinta); }
+
+@media (max-width: 780px) { .navegacion { display: none; } }
+
+/* --------------------------------------------------------------------------
+   4. BOTONES
+   -------------------------------------------------------------------------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: var(--paso-0);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .12s ease, background-color .15s ease;
+}
+
+.boton:active { transform: translateY(1px); }
+
+.boton--oscuro   { background: var(--tinta); color: var(--papel); }
+.boton--oscuro:hover { background: #24311a; }
+
+.boton--pulpa    { background: var(--pulpa); color: var(--tinta); }
+.boton--pulpa:hover { background: #cbdc4c; }
+
+.boton--contorno {
+  background: transparent;
+  color: var(--tinta);
+  box-shadow: inset 0 0 0 2px var(--papel-3);
+}
+.boton--contorno:hover { box-shadow: inset 0 0 0 2px var(--tinta); }
+
+.boton--whatsapp {
+  background: var(--whatsapp);
+  color: var(--whatsapp-ink);
+}
+.boton--whatsapp:hover { background: #2ee273; }
+
+.boton--chico { min-height: 42px; padding: 8px 16px; font-size: var(--paso--1); }
+
+/* --------------------------------------------------------------------------
+   5. PORTADA
+   -------------------------------------------------------------------------- */
+.portada { padding-block: clamp(40px, 7vw, 76px) clamp(36px, 6vw, 64px); }
+
+.portada__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.portada__texto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.sello {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 15px;
+  background: var(--pulpa);
+  color: var(--tinta);
+  border-radius: 999px;
+  font-size: var(--paso--1);
+  font-weight: 700;
+}
+
+.portada h1 {
+  font-size: var(--paso-5);
+  max-width: 15ch;
+}
+
+.portada h1 em {
+  font-style: normal;
+  color: var(--pulpa-texto);
+  position: relative;
+  white-space: nowrap;
+}
+
+/* Subrayado dibujado a mano bajo la palabra destacada */
+.portada h1 em::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0.04em;
+  height: 0.12em;
+  background: var(--pulpa);
+  border-radius: 999px;
+  z-index: -1;
+}
+
+.portada__bajada {
+  font-size: var(--paso-1);
+  color: var(--tinta-suave);
+  max-width: 46ch;
+}
+
+.portada__acciones { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* La foto se recorta con una forma orgánica, como el contorno de una palta */
+/* La foto se recorta con la silueta de una palta: angosta arriba,
+   ancha y redonda abajo. */
+.portada__foto {
+  position: relative;
+  aspect-ratio: 5 / 6.4;
+  border-radius: 46% 54% 50% 50% / 64% 62% 40% 38%;
+  overflow: hidden;
+  background: var(--papel-2);
+  box-shadow: var(--sombra);
+}
+
+.portada__foto img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 860px) {
+  .portada__grid { grid-template-columns: 1fr; }
+  .portada__foto { aspect-ratio: 4 / 3; border-radius: 28px; order: -1; }
+}
+
+/* --------------------------------------------------------------------------
+   6. MARCADOR DE FOTO QUE FALTA
+   Mientras no subas una foto, aparece este bloque prolijo en su lugar.
+   -------------------------------------------------------------------------- */
+.falta-foto {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  text-align: center;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      var(--papel-2) 0 14px,
+      #EAE9DB 14px 28px
+    );
+  color: var(--tinta-suave);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.falta-foto span { max-width: 24ch; }
+.falta-foto strong { word-break: break-all; }
+.falta-foto svg { flex-shrink: 0; opacity: .55; }
+
+/* En las miniaturas del catálogo no cabe el texto: solo el ícono */
+.producto__foto .falta-foto { padding: 8px; gap: 0; }
+.producto__foto .falta-foto span { display: none; }
+.producto__foto .falta-foto svg { opacity: .4; }
+
+/* --------------------------------------------------------------------------
+   7. SECCIONES
+   -------------------------------------------------------------------------- */
+.seccion { padding-block: clamp(52px, 7vw, 92px); }
+.seccion--tono { background: var(--papel-2); }
+.seccion--oscura { background: var(--hoja); color: var(--papel); }
+
+.seccion__encabezado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 32px;
+}
+
+.seccion h2 { font-size: var(--paso-4); }
+
+.seccion__nota {
+  font-size: var(--paso--1);
+  color: var(--tinta-suave);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   8. CATÁLOGO
+   Se compone como una lista de precios de feria: el nombre a la izquierda,
+   el precio a la derecha y una línea punteada que los une.
+   -------------------------------------------------------------------------- */
+.catalogo {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.producto {
+  display: grid;
+  grid-template-columns: 104px 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 16px;
+  background: var(--papel);
+  border: 1px solid var(--papel-3);
+  border-radius: 16px;
+}
+
+.seccion--tono .producto { background: var(--papel); }
+
+.producto--destacado {
+  border-color: var(--tinta);
+  box-shadow: var(--sombra);
+}
+
+.producto__foto {
+  width: 104px;
+  height: 104px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--papel-2);
+  position: relative;
+}
+
+.producto__foto img { width: 100%; height: 100%; object-fit: cover; }
+
+.producto__cuerpo { min-width: 0; }
+
+.producto__titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+}
+
+.producto__nombre {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-2);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.producto__formato {
+  font-size: var(--paso--1);
+  font-weight: 700;
+  color: var(--tinta-suave);
+  padding: 3px 9px;
+  background: var(--papel-2);
+  border-radius: 999px;
+}
+
+.producto--destacado .producto__formato {
+  background: var(--pulpa);
+  color: var(--tinta);
+}
+
+.producto__insignia {
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--papel);
+  background: var(--cuesco);
+  padding: 4px 9px;
+  border-radius: 999px;
+}
+
+.producto__detalle {
+  margin-top: 5px;
+  font-size: var(--paso--1);
+  color: var(--tinta-suave);
+  max-width: 54ch;
+}
+
+.producto__cierre {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.producto__precio {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-2);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Control de cantidad */
+.cantidad {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--papel-2);
+  border-radius: 11px;
+  padding: 4px;
+}
+
+.cantidad button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tinta);
+  font-size: 1.25rem;
+  font-family: inherit;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cantidad button:hover { background: var(--papel-3); }
+
+.cantidad__numero {
+  min-width: 26px;
+  text-align: center;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.producto--agotado { opacity: .55; }
+
+@media (max-width: 720px) {
+  .producto {
+    grid-template-columns: 76px 1fr;
+    gap: 14px;
+  }
+  .producto__foto { width: 76px; height: 76px; }
+  .producto__cierre {
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    padding-top: 4px;
+    border-top: 1px dashed var(--papel-3);
+    margin-top: 2px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9. BARRA DE PEDIDO
+   Queda fija abajo mientras la persona navega.
+   -------------------------------------------------------------------------- */
+.pedido {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 12px var(--gutter);
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  background: var(--tinta);
+  color: var(--papel);
+  transform: translateY(105%);
+  transition: transform .26s cubic-bezier(.2, .8, .2, 1);
+}
+
+.pedido--visible { transform: translateY(0); }
+
+.pedido__interior {
+  max-width: var(--ancho);
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.pedido__resumen { min-width: 0; }
+
+.pedido__lineas {
+  font-size: var(--paso--1);
+  color: #B9C7AD;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pedido__total {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-2);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.pedido__acciones {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.pedido__vaciar {
+  background: transparent;
+  border: 0;
+  color: #B9C7AD;
+  font-family: inherit;
+  font-size: var(--paso--1);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.pedido__vaciar:hover { color: var(--papel); }
+
+@media (max-width: 560px) {
+  .pedido__vaciar { display: none; }
+  .pedido__total { font-size: var(--paso-1); }
+}
+
+/* Espacio al final para que la barra no tape el pie */
+.colchon { height: 96px; }
+
+/* --------------------------------------------------------------------------
+   10. RAZONES
+   -------------------------------------------------------------------------- */
+.razones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.razon { border-top: 3px solid var(--pulpa); padding-top: 18px; }
+
+.razon__dato {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-3);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--pulpa-texto);
+}
+
+.razon__titulo {
+  font-size: var(--paso-1);
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.razon__texto {
+  margin-top: 10px;
+  color: var(--tinta-suave);
+  font-size: var(--paso--1);
+}
+
+/* --------------------------------------------------------------------------
+   11. HISTORIA
+   -------------------------------------------------------------------------- */
+.historia__grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(28px, 5vw, 64px);
+  align-items: center;
+}
+
+.historia__foto {
+  aspect-ratio: 4 / 5;
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(251, 250, 245, .12);
+}
+
+.historia__foto img { width: 100%; height: 100%; object-fit: cover; }
+
+.historia__texto { display: flex; flex-direction: column; gap: 18px; }
+
+.seccion--oscura .etiqueta { color: var(--pulpa); }
+
+.historia__parrafos {
+  font-size: var(--paso-1);
+  color: #D5DECC;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 54ch;
+}
+
+.historia__firma {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-1);
+  font-weight: 700;
+  padding-top: 6px;
+}
+
+.historia__firma small {
+  display: block;
+  font-family: 'Karla', sans-serif;
+  font-size: var(--paso--1);
+  font-weight: 600;
+  color: #A9B89E;
+}
+
+@media (max-width: 860px) {
+  .historia__grid { grid-template-columns: 1fr; }
+  .historia__foto { aspect-ratio: 4 / 3; }
+}
+
+/* --------------------------------------------------------------------------
+   12. DESPACHO Y PASOS
+   -------------------------------------------------------------------------- */
+.despacho__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  list-style: none;
+  margin: 0 0 44px;
+  padding: 0;
+}
+
+.zona {
+  padding: 22px;
+  background: var(--papel);
+  border: 1px solid var(--papel-3);
+  border-radius: 14px;
+}
+
+.seccion--tono .zona { background: var(--papel); }
+
+.zona__nombre {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.zona__detalle {
+  margin-top: 8px;
+  font-size: var(--paso--1);
+  color: var(--tinta-suave);
+}
+
+.pasos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: paso;
+}
+
+.paso { counter-increment: paso; }
+
+.paso__numero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--tinta);
+  color: var(--papel);
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 800;
+  font-size: var(--paso-0);
+  margin-bottom: 14px;
+}
+
+.paso__numero::before { content: counter(paso); }
+
+.paso__titulo { font-size: var(--paso-1); font-weight: 700; }
+
+.paso__texto {
+  margin-top: 6px;
+  font-size: var(--paso--1);
+  color: var(--tinta-suave);
+}
+
+/* --------------------------------------------------------------------------
+   13. LLAMADO FINAL
+   -------------------------------------------------------------------------- */
+.llamado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(28px, 4vw, 44px);
+  background: var(--pulpa);
+  color: var(--tinta);
+  border-radius: 22px;
+}
+
+.llamado h2 { font-size: var(--paso-3); max-width: 18ch; }
+
+.llamado p {
+  margin-top: 8px;
+  font-size: var(--paso-0);
+  max-width: 44ch;
+}
+
+/* --------------------------------------------------------------------------
+   14. PIE
+   -------------------------------------------------------------------------- */
+.pie {
+  border-top: 1px solid var(--papel-3);
+  padding-block: 40px;
+}
+
+.pie__interior {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pie__marca {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: var(--paso-1);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.pie__detalle {
+  font-size: var(--paso--1);
+  color: var(--tinta-suave);
+  margin-top: 4px;
+}
+
+.pie__enlaces {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: var(--paso--1);
+  font-weight: 600;
+}
+
+.pie__enlaces a {
+  color: var(--tinta);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pie__enlaces a:hover { color: var(--pulpa-texto); }
+
+.pie__credito {
+  margin-top: 28px;
+  font-size: 0.8125rem;
+  color: var(--tinta-suave);
+}
+
+/* --------------------------------------------------------------------------
+   15. MOVIMIENTO
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}

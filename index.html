@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Paltas Marité · Paltas sin pesticidas de Melipilla</title>
+<meta name="description" content="Paltas cultivadas sin pesticidas en Melipilla y cosechadas a pedido. Despacho a Santiago y la Región de Valparaíso. Pide por WhatsApp.">
+
+<meta property="og:title" content="Paltas Marité">
+<meta property="og:description" content="Paltas sin pesticidas de Melipilla, cosechadas a pedido. Despacho a Santiago y Valparaíso.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="fotos/portada.jpg">
+<meta name="theme-color" content="#FBFAF5">
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.5c-2.6 0-4.2 3.2-4.6 6.2C7 11.8 6.5 13.4 6.5 15.2 6.5 18.4 8.9 21 12 21s5.5-2.6 5.5-5.8c0-1.8-.5-3.4-.9-6.5C16.2 5.7 14.6 2.5 12 2.5z' fill='%23253A1A'/><circle cx='12' cy='15' r='3' fill='%23BFD03F'/></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Karla:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+<!-- ======================= BARRA SUPERIOR ======================= -->
+<header class="barra">
+  <div class="barra__interior envoltura">
+    <a class="marca" href="#">
+      <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 2.5c-2.6 0-4.2 3.2-4.6 6.2C7 11.8 6.5 13.4 6.5 15.2 6.5 18.4 8.9 21 12 21s5.5-2.6 5.5-5.8c0-1.8-.5-3.4-.9-6.5C16.2 5.7 14.6 2.5 12 2.5z" fill="#253A1A"/>
+        <path d="M12 5c-1.5 0-2.5 2.3-2.8 4.5-.3 2-.7 3.3-.7 5 0 2.2 1.6 4 3.5 4s3.5-1.8 3.5-4c0-1.7-.4-3-.7-5C14.5 7.3 13.5 5 12 5z" fill="#BFD03F"/>
+        <circle cx="12" cy="15" r="2.6" fill="#A96B47"/>
+      </svg>
+      <span class="marca__nombre" data-campo="nombre">Paltas Marité</span>
+    </a>
+
+    <nav class="navegacion" aria-label="Secciones">
+      <a href="#paltas">Las paltas</a>
+      <a href="#campo">El campo</a>
+      <a href="#despacho">Despacho</a>
+    </nav>
+
+    <a class="boton boton--oscuro boton--chico" href="#paltas">Hacer un pedido</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ======================= PORTADA ======================= -->
+  <section class="portada envoltura">
+    <div class="portada__grid">
+
+      <div class="portada__texto">
+        <span class="sello">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <span data-campo="sello">Sin pesticidas · Cosecha a pedido</span>
+        </span>
+
+        <h1 data-campo="titulo">Paltas <em>de verdad</em>, criadas sin apuro en Melipilla.</h1>
+
+        <p class="portada__bajada" data-campo="bajada">Cultivadas sin pesticidas y cosechadas después de que haces tu pedido. Llegan a tu casa en Santiago o la Quinta Región en pocos días.</p>
+
+        <div class="portada__acciones">
+          <a class="boton boton--oscuro" href="#paltas">Ver las paltas</a>
+          <a class="boton boton--contorno" href="#campo">Conocer el campo</a>
+        </div>
+      </div>
+
+      <div class="portada__foto" data-foto="portada"></div>
+
+    </div>
+  </section>
+
+  <!-- ======================= CATÁLOGO ======================= -->
+  <section class="seccion seccion--tono" id="paltas">
+    <div class="envoltura">
+      <div class="seccion__encabezado">
+        <h2>Elige tus paltas</h2>
+        <p class="seccion__nota" data-campo="avisoCatalogo">Se cosecha después de tu pedido</p>
+      </div>
+
+      <ul class="catalogo" id="catalogo">
+        <!-- Los productos se arman solos desde datos.js -->
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======================= RAZONES ======================= -->
+  <section class="seccion">
+    <div class="envoltura">
+      <div class="seccion__encabezado">
+        <h2>Por qué estas paltas</h2>
+      </div>
+      <ul class="razones" id="razones"></ul>
+    </div>
+  </section>
+
+  <!-- ======================= EL CAMPO ======================= -->
+  <section class="seccion seccion--oscura" id="campo">
+    <div class="envoltura">
+      <div class="historia__grid">
+        <div class="historia__foto" data-foto="historia"></div>
+        <div class="historia__texto">
+          <span class="etiqueta">El campo</span>
+          <h2 data-campo="historiaTitulo">Quién está detrás de estas paltas</h2>
+          <div class="historia__parrafos" id="historiaTexto"></div>
+          <p class="historia__firma">
+            <span data-campo="firma">Marité</span>
+            <small data-campo="firmaDetalle">Melipilla</small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= DESPACHO ======================= -->
+  <section class="seccion seccion--tono" id="despacho">
+    <div class="envoltura">
+      <div class="seccion__encabezado">
+        <h2 data-campo="despachoTitulo">Dónde llegamos</h2>
+        <p class="seccion__nota" data-campo="despachoTexto"></p>
+      </div>
+
+      <ul class="despacho__grid" id="zonas"></ul>
+
+      <h3 class="etiqueta" style="margin-bottom:18px">Cómo funciona el pedido</h3>
+      <ol class="pasos" id="pasos"></ol>
+    </div>
+  </section>
+
+  <!-- ======================= LLAMADO FINAL ======================= -->
+  <section class="seccion">
+    <div class="envoltura">
+      <div class="llamado">
+        <div>
+          <h2>¿Lista para pedir?</h2>
+          <p>Arma tu pedido acá arriba o escríbeme directo por WhatsApp si tienes dudas.</p>
+        </div>
+        <a class="boton boton--whatsapp" id="whatsappDirecto" href="#">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>
+          Escribir por WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="colchon"></div>
+</main>
+
+<!-- ======================= PIE ======================= -->
+<footer class="pie">
+  <div class="pie__interior envoltura">
+    <div>
+      <p class="pie__marca" data-campo="nombre">Paltas Marité</p>
+      <p class="pie__detalle" data-campo="ubicacion">Melipilla, Región Metropolitana</p>
+    </div>
+    <div class="pie__enlaces" id="contacto"></div>
+  </div>
+  <p class="pie__credito envoltura">Cultivado y despachado por nosotros mismos.</p>
+</footer>
+
+<!-- ======================= BARRA DE PEDIDO ======================= -->
+<div class="pedido" id="pedido" role="region" aria-label="Tu pedido">
+  <div class="pedido__interior">
+    <div class="pedido__resumen">
+      <p class="pedido__lineas" id="pedidoLineas"></p>
+      <p class="pedido__total" id="pedidoTotal">$0</p>
+    </div>
+    <div class="pedido__acciones">
+      <button type="button" class="pedido__vaciar" id="vaciar">Vaciar</button>
+      <a class="boton boton--whatsapp" id="enviarPedido" href="#">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg>
+        Pedir por WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="datos.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

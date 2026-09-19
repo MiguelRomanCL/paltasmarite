@@ -1,0 +1,43 @@
+FOTOS DE LA PÁGINA
+==================
+
+Aquí van todas las fotos. Estas son las que la página está esperando:
+
+  portada.jpg     La mejor foto que tengas. Paltas en el árbol o en canasto.
+  palta-kilo.jpg  Unas pocas paltas juntas.
+  malla-3kg.jpg   La malla armada como se la entregas al cliente.
+  caja-10kg.jpg   La caja llena.
+  marite.jpg      Tú en el campo, entre los paltos.
+
+Mientras una foto no esté, la página muestra un recuadro rayado que dice
+cuál falta. No se ve rota, solo incompleta.
+
+
+CÓMO NOMBRAR LOS ARCHIVOS
+-------------------------
+
+Todo en minúscula, sin espacios, sin tildes y sin eñes.
+
+  Bien:  malla-3kg.jpg
+  Mal:   Malla 3 Kg.JPG
+
+El nombre que pongas aquí tiene que ser idéntico al que escribes en datos.js
+
+
+CONSEJOS PARA SACARLAS
+----------------------
+
+- De día, con luz natural. Nunca con flash.
+- Acerca la cámara. Que la palta llene la foto.
+- Una palta cortada por la mitad vende más que diez enteras.
+- Fondo simple: una tabla de madera, un paño, la tierra del campo.
+- Para la portada, saca la foto horizontal (el teléfono de lado).
+- Para tu foto en el campo, que se vean los paltos detrás.
+
+
+SI LAS FOTOS PESAN MUCHO
+------------------------
+
+Una foto de celular puede pesar 5 MB y hace lenta la página. Achícalas
+en squoosh.app (es gratis y no hay que instalar nada). Deja cada foto
+en menos de 500 KB.
