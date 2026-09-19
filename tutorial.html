@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Copia y publica tu tienda</title>
+<meta name="description" content="Tutorial paso a paso para copiar la página de Paltas Marité a tu propio GitHub, publicarla, editarla desde el celular y pedirle cambios a Codex. Para alguien que nunca ha programado.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.5c-2.6 0-4.2 3.2-4.6 6.2C7 11.8 6.5 13.4 6.5 15.2 6.5 18.4 8.9 21 12 21s5.5-2.6 5.5-5.8c0-1.8-.5-3.4-.9-6.5C16.2 5.7 14.6 2.5 12 2.5z' fill='%23253A1A'/><circle cx='12' cy='15' r='3' fill='%23BFD03F'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Karla:wght@400;600;700;800&display=swap">
+<style>
+/* Misma paleta que la tienda: cáscara, pulpa y cuesco de la palta */
+:root {
+  color-scheme: light;
+  --papel: #FBFAF5;
+  --papel-2: #F1F0E5;
+  --papel-3: #E6E5D6;
+  --tinta: #17200F;
+  --tinta-suave: #55604C;
+  --pulpa: #BFD03F;
+  --pulpa-texto: #5E6B10;
+  --cuesco: #A96B47;
+  --hoja: #253A1A;
+  --ojo-fondo: #FFF4D6;
+  --ojo-borde: #E9CF86;
+  --bien-fondo: #EDF4DA;
+  --bien-borde: #C9DA8E;
+  /* colores de las pantallas imitadas de GitHub */
+  --gh-fondo: #FFFFFF;
+  --gh-gris: #F6F8FA;
+  --gh-borde: #D0D7DE;
+  --gh-texto: #1F2328;
+  --gh-suave: #59636E;
+  --gh-verde: #1F883D;
+  --gh-azul: #0969DA;
+  --gh-oscuro: #24292F;
+  --mono: ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: 'Karla', ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  padding-inline: clamp(16px, 4vw, 32px);
+  overflow-x: hidden;
+}
+.pagina { max-width: 780px; margin-inline: auto; padding-block: 28px 96px; }
+h1, h2, h3, h4 {
+  font-family: 'Bricolage Grotesque', 'Karla', sans-serif;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  margin: 0;
+}
+h1 { font-size: clamp(2.4rem, 7vw, 3.6rem); font-weight: 800; }
+h2 { font-size: clamp(1.7rem, 4.5vw, 2.25rem); font-weight: 800; }
+h3 { font-size: 1.25rem; font-weight: 700; }
+h4 { font-size: 1.05rem; font-weight: 700; }
+p { margin: 0; }
+p + p { margin-top: 12px; }
+a { color: var(--pulpa-texto); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { color: var(--tinta); }
+:focus-visible { outline: 3px solid var(--cuesco); outline-offset: 3px; border-radius: 4px; }
+strong { font-weight: 800; }
+code {
+  font-family: var(--mono);
+  font-size: 0.9em;
+  background: var(--papel-2);
+  padding: 2px 6px;
+  border-radius: 5px;
+  word-break: break-all;
+}
+ul, ol { margin: 12px 0 0; padding-left: 22px; }
+li + li { margin-top: 8px; }
+.etiqueta {
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--pulpa-texto);
+}
+
+/* ---------- Cabecera ---------- */
+.cabecera { display: flex; flex-direction: column; gap: 18px; padding-block: 8px 32px; }
+.cabecera__marca { display: flex; align-items: center; gap: 10px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.15rem; }
+.cabecera__marca img { height: 36px; width: auto; }
+.cabecera p { font-size: 1.2rem; color: var(--tinta-suave); max-width: 52ch; }
+.datos-rapidos {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;
+  margin-top: 8px;
+}
+.dato { background: var(--papel-2); border-radius: 14px; padding: 14px 16px; }
+.dato span { display: block; }
+.dato__n { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--pulpa-texto); }
+.dato__t { font-size: 0.9rem; color: var(--tinta-suave); }
+
+/* ---------- Índice ---------- */
+.indice { background: var(--hoja); color: var(--papel); border-radius: 20px; padding: 24px clamp(18px, 4vw, 32px); margin-block: 8px 40px; }
+.indice .etiqueta { color: var(--pulpa); }
+.indice ol { margin-top: 12px; padding-left: 0; list-style: none; counter-reset: ind; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 6px 24px; }
+.indice li { counter-increment: ind; display: flex; gap: 10px; align-items: baseline; margin: 0; }
+.indice li::before { content: counter(ind); font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; color: var(--pulpa); min-width: 1.4em; }
+.indice a { color: var(--papel); text-decoration: none; }
+.indice a:hover { color: var(--pulpa); }
+
+/* ---------- Secciones ---------- */
+.seccion { padding-block: 28px; border-top: 1px solid var(--papel-3); }
+.seccion__cab { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 14px; }
+.tiempo { font-size: 0.9rem; font-weight: 700; color: var(--tinta-suave); white-space: nowrap; }
+.seccion > p, .seccion > ul, .seccion > ol { max-width: 64ch; }
+
+/* Pasos numerados: son una secuencia real, por eso llevan número */
+.paso { display: grid; grid-template-columns: 40px 1fr; gap: 14px; margin-top: 22px; }
+.paso__n {
+  width: 40px; height: 40px; border-radius: 50%; background: var(--tinta); color: var(--papel);
+  display: grid; place-items: center; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 1.05rem;
+}
+.paso__cuerpo { min-width: 0; }
+.paso__cuerpo p { max-width: 62ch; }
+.paso h3 { margin-bottom: 6px; }
+
+/* Avisos */
+.nota { border-radius: 14px; padding: 14px 18px; margin-top: 16px; max-width: 64ch; }
+.nota strong:first-child { display: block; margin-bottom: 4px; }
+.nota--ojo { background: var(--ojo-fondo); border: 1px solid var(--ojo-borde); }
+.nota--bien { background: var(--bien-fondo); border: 1px solid var(--bien-borde); }
+.nota--gris { background: var(--papel-2); }
+
+/* Botón que hay que apretar, mencionado en el texto */
+.tecla {
+  display: inline-block; font-weight: 800; font-size: 0.92em;
+  background: var(--papel-2); border: 1px solid var(--papel-3); border-bottom-width: 3px;
+  border-radius: 7px; padding: 1px 9px; white-space: nowrap;
+}
+.tecla--verde { background: var(--gh-verde); color: #fff; border-color: #166A2F; }
+
+/* ---------- Pantallas imitadas ---------- */
+.pantalla {
+  border: 1px solid var(--papel-3); border-radius: 14px; overflow: hidden;
+  background: var(--gh-fondo); margin-top: 16px; box-shadow: 0 8px 24px rgba(23,32,15,.07);
+  font-family: ui-sans-serif, system-ui, "Segoe UI", sans-serif; font-size: 0.9rem; color: var(--gh-texto);
+}
+.pantalla__nav { background: #EDECE2; padding: 8px 12px; display: flex; gap: 8px; align-items: center; }
+.pantalla__puntos { display: flex; gap: 5px; }
+.pantalla__puntos i { width: 9px; height: 9px; border-radius: 50%; background: #C9C6B4; display: block; }
+.pantalla__url { flex: 1; min-width: 0; background: #fff; border-radius: 6px; padding: 4px 10px; font-family: var(--mono); font-size: 0.78rem; color: var(--gh-suave); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pantalla__pie { font-size: 0.82rem; color: var(--tinta-suave); padding: 8px 14px; background: var(--papel-2); font-family: 'Karla', sans-serif; }
+.gh-top { background: var(--gh-oscuro); color: #fff; padding: 10px 14px; display: flex; gap: 12px; align-items: center; font-size: 0.85rem; }
+.gh-top svg { flex-shrink: 0; }
+.gh-cuerpo { padding: 14px; }
+.gh-fila { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.gh-repo { font-weight: 600; color: var(--gh-azul); }
+.gh-repo span { color: var(--gh-suave); font-weight: 400; }
+.gh-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border: 1px solid var(--gh-borde);
+  border-radius: 6px; background: var(--gh-gris); font-weight: 600; font-size: 0.85rem; color: var(--gh-texto); white-space: nowrap;
+}
+.gh-btn--verde { background: var(--gh-verde); color: #fff; border-color: rgba(0,0,0,.15); }
+.gh-btn--azul { background: var(--gh-azul); color: #fff; border-color: rgba(0,0,0,.15); }
+.gh-campo { margin-top: 12px; }
+.gh-campo label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; }
+.gh-input { border: 1px solid var(--gh-borde); border-radius: 6px; padding: 6px 10px; background: #fff; font-family: var(--mono); font-size: 0.85rem; }
+.gh-tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--gh-borde); padding: 0 14px; }
+.gh-tab { padding: 8px 10px; font-size: 0.85rem; color: var(--gh-suave); border-bottom: 2px solid transparent; }
+.gh-tab--activa { color: var(--gh-texto); border-bottom-color: #FD8C73; font-weight: 600; }
+.gh-menu { display: grid; grid-template-columns: 170px 1fr; gap: 14px; }
+.gh-menu ul { list-style: none; margin: 0; padding: 0; }
+.gh-menu li { padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; margin: 0; color: var(--gh-suave); }
+.gh-menu li.activo { background: var(--gh-gris); color: var(--gh-texto); font-weight: 600; border-left: 3px solid #FD8C73; }
+.gh-archivos { border: 1px solid var(--gh-borde); border-radius: 6px; overflow: hidden; margin-top: 10px; }
+.gh-archivo { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-top: 1px solid var(--gh-borde); font-size: 0.85rem; }
+.gh-archivo:first-child { border-top: 0; background: var(--gh-gris); }
+.gh-archivo svg { flex-shrink: 0; }
+.gh-codigo { font-family: var(--mono); font-size: 0.82rem; line-height: 1.7; background: #fff; border: 1px solid var(--gh-borde); border-radius: 6px; padding: 10px 14px; margin-top: 10px; overflow-x: auto; white-space: pre; }
+.gh-codigo mark { background: #FFF2B2; color: inherit; padding: 1px 3px; border-radius: 3px; }
+.gh-banner { background: #DDF4FF; border: 1px solid #54AEFF; border-radius: 6px; padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 0.85rem; }
+.gh-banner--verde { background: #DAFBE1; border-color: #4AC26B; }
+.gh-modal { border: 1px solid var(--gh-borde); border-radius: 10px; padding: 14px; margin-top: 10px; background: #fff; box-shadow: 0 8px 24px rgba(0,0,0,.1); max-width: 420px; }
+.gh-radio { display: flex; gap: 8px; align-items: flex-start; font-size: 0.85rem; margin-top: 8px; }
+.gh-radio i { width: 14px; height: 14px; border-radius: 50%; border: 4px solid var(--gh-azul); display: inline-block; flex-shrink: 0; margin-top: 3px; }
+.gh-zona { border: 2px dashed var(--gh-borde); border-radius: 8px; padding: 26px; text-align: center; color: var(--gh-suave); margin-top: 10px; }
+.gh-chat { display: flex; flex-direction: column; gap: 10px; }
+.gh-burbuja { border-radius: 12px; padding: 10px 14px; max-width: 90%; font-size: 0.9rem; }
+.gh-burbuja--yo { background: var(--gh-gris); align-self: flex-end; }
+.gh-burbuja--codex { background: #EEF2FF; border: 1px solid #C7D2FE; }
+
+/* Marcador "aquí" sobre el botón que hay que apretar */
+.aqui { position: relative; outline: 3px solid var(--cuesco); outline-offset: 4px; border-radius: 8px; }
+.aqui::after {
+  content: "aquí"; position: absolute; left: 50%; top: calc(100% + 10px); transform: translateX(-50%);
+  background: var(--cuesco); color: #fff; font-family: 'Karla', sans-serif; font-weight: 800; font-size: 0.72rem;
+  padding: 2px 9px; border-radius: 999px; letter-spacing: 0.06em; white-space: nowrap;
+}
+.gh-fila--con-aqui { margin-bottom: 26px; }
+
+/* ---------- El mapa ---------- */
+.mapa { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; margin-top: 18px; }
+.mapa__caja { flex: 1 1 180px; background: var(--papel-2); border-radius: 16px; padding: 16px; min-width: 0; }
+.mapa__caja--tu { background: var(--pulpa); }
+.mapa__caja--web { background: var(--hoja); color: var(--papel); }
+.mapa__caja h4 { margin-bottom: 4px; }
+.mapa__caja p { font-size: 0.92rem; }
+.mapa__caja--web p { color: #D5DECC; }
+.mapa__flecha { flex: 0 0 auto; align-self: center; display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--tinta-suave); font-size: 0.78rem; font-weight: 700; padding-inline: 4px; }
+.mapa__flecha svg { display: block; }
+@media (max-width: 640px) {
+  .mapa { flex-direction: column; }
+  .mapa__flecha svg { transform: rotate(90deg); }
+}
+
+/* ---------- Dirección de la página ---------- */
+.direccion { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-family: var(--mono); font-size: 0.95rem; margin-top: 12px; background: var(--papel-2); padding: 12px 14px; border-radius: 12px; }
+.direccion b { font-weight: 800; padding: 2px 8px; border-radius: 6px; }
+.direccion .p1 { background: var(--pulpa); color: var(--tinta); }
+.direccion .p2 { background: var(--cuesco); color: #fff; }
+.leyenda { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; font-size: 0.9rem; color: var(--tinta-suave); }
+.leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 6px; }
+
+/* ---------- Tablas ---------- */
+.tabla-envoltura { overflow-x: auto; margin-top: 14px; }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--papel-3); vertical-align: top; }
+th { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-suave); font-weight: 800; }
+td:first-child { font-weight: 700; white-space: nowrap; }
+
+/* ---------- Lista para marcar ---------- */
+.checklist { list-style: none; padding: 0; margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.checklist li { margin: 0; }
+.checklist label { display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; background: var(--papel-2); border-radius: 12px; cursor: pointer; }
+.checklist input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--pulpa-texto); flex-shrink: 0; }
+.checklist input:checked + span { text-decoration: line-through; color: var(--tinta-suave); }
+
+.pie { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--papel-3); font-size: 0.92rem; color: var(--tinta-suave); }
+
+@media (max-width: 560px) {
+  .gh-menu { grid-template-columns: 1fr; }
+  .paso { grid-template-columns: 34px 1fr; gap: 10px; }
+  .paso__n { width: 34px; height: 34px; font-size: 0.95rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+<!-- ===================== CABECERA ===================== -->
+<header class="cabecera">
+  <div class="cabecera__marca">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH4AAAEECAMAAADZM3CpAAACHFBMVEXl2qScoleYXSPYb1FgJx2vbVbj4+OUlJThnVl5hmDo5mg8VERXV1dqckz3wT7JtJepr5XW19dohh+Thy7YgD7c3NwrKyvg08i3t7e8w61hZRu9w72AJx23t8H15HMAAAD9/fzZnG4sNxZQaCZwNxk3RxmuxjtHVyrt3GmRSiM5RyYmKRRphiWrWCfFaS61yUTrpnP///9ZdSXOdDWMRRwUFwjl3VwLBwEuFwvcoXO6YizR1lQzOSdEWBqSVTJOZxr2tXKWZElGSisdJQ5OJxHuyHH66Yf+84rVu1Vkeiqud1TMyVDr6ec9Uxp0Ris8UyqNW0NRWE7wvUbn2Mrm4F3X19Pt2IuPpzTNt21tOyS1hmfu5dZHGgjThUtSNyqka0nFi2VohRzvxE309PRZdBp4kyvwuInYxHKpukPLyMb5g23o6OivhVUuKiSCPRuEmi+sqaa2trFMSEVVNBilSS+qqapkehqYl5J0VTSTd0uNiofn5+d4dXLpllTorILz57HSxrlOZUZsaWa6urosDATX19fz8/P69dPr6uuQZDjX19fki0rk4+SaszuThk/r6+t9fX2xllb09PS80UywpZb2xofHx8f39/doKhaJhHiKeG7SqIpESxzY2Ni0p2iWlpZtWE3IurB3QhxqY1nIqF2wlm7vnG1qajTb2GiELSTJycmkUh7ze2WompD0vT2kuz3KycqXqEmJNii3t7c979f/AAAAtHRSTlP///////8jFv////8I/////2r///+QBv9K//8r/xn/AP7/////////////////////Av///////////////////////////////////f///////////v/////////////////Q/////////43///////////8J//////9w/////////wv/MbH/rf9N/1L//80F/5L///8vdf//////bP8N/////////////xP//////0v//yxxgto+AAA0TUlEQVR42rV9h0MbV7b34Nhpm7a7b3ff+wpGI01G0ggjsAZJoIIKwhIgwJhebdO8BmPABdx7Ysc1sRP3Gscp62ST/Qe/37n3zmhGBZNv37tOXLDR755+7rnn3itt/fdHfT39/M6V/Zf2dtR0dHTUsNFx6fPjXx82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" alt="" width="126" height="260">
+    <span>Paltas Marité</span>
+  </div>
+  <h1>Haz tu propia copia de la página y manéjala tú</h1>
+  <p>Este tutorial te lleva desde cero hasta tener la tienda publicada en tu propia cuenta, editarla desde el celular y pedirle cambios a un asistente de inteligencia artificial. No necesitas haber programado nunca.</p>
+  <div class="datos-rapidos">
+    <div class="dato"><span class="dato__n">45 min</span><span class="dato__t">de principio a fin, con calma</span></div>
+    <div class="dato"><span class="dato__n">$0</span><span class="dato__t">todo lo de aquí es gratis</span></div>
+    <div class="dato"><span class="dato__n">1 correo</span><span class="dato__t">es lo único que necesitas tener</span></div>
+  </div>
+</header>
+
+<nav class="indice" aria-label="Contenido">
+  <span class="etiqueta">Contenido</span>
+  <ol>
+    <li><a href="#mapa">Qué vas a hacer, en un dibujo</a></li>
+    <li><a href="#cuenta">Crea tu cuenta en GitHub</a></li>
+    <li><a href="#copia">Copia el proyecto a tu cuenta</a></li>
+    <li><a href="#publica">Publica tu copia en internet</a></li>
+    <li><a href="#cambio">Tu primer cambio: un precio</a></li>
+    <li><a href="#fotos">Sube tus fotos</a></li>
+    <li><a href="#codex">Pídele cambios grandes a Codex</a></li>
+    <li><a href="#rompe">Si algo se rompe</a></li>
+    <li><a href="#mover">Cómo se mueven las cosas</a></li>
+    <li><a href="#nunca">Lo que nunca se sube</a></li>
+    <li><a href="#glosario">Las palabras raras, explicadas</a></li>
+    <li><a href="#lista">Lista para ir marcando</a></li>
+  </ol>
+</nav>
+
+<!-- ===================== 1. EL MAPA ===================== -->
+<section class="seccion" id="mapa">
+  <div class="seccion__cab"><h2>Qué vas a hacer, en un dibujo</h2><span class="tiempo">2 min de lectura</span></div>
+  <p>La página de la tienda ya existe y funciona. Vive en la cuenta de GitHub de Miguel. Lo que vas a hacer es <strong>sacarle una copia a tu propia cuenta</strong>, publicar esa copia con su propia dirección, y desde ahí trabajar tú sola.</p>
+
+  <div class="mapa">
+    <div class="mapa__caja">
+      <h4>La original</h4>
+      <p>Está en la cuenta de Miguel. Es la que se está mostrando hoy. No la vas a tocar.</p>
+    </div>
+    <div class="mapa__flecha"><svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true"><path d="M2 10h26M20 3l8 7-8 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>copiar</div>
+    <div class="mapa__caja mapa__caja--tu">
+      <h4>Tu copia</h4>
+      <p>Igual a la original, pero en tu cuenta. Aquí cambias precios, subes fotos y experimentas.</p>
+    </div>
+    <div class="mapa__flecha"><svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true"><path d="M2 10h26M20 3l8 7-8 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>publicar</div>
+    <div class="mapa__caja mapa__caja--web">
+      <h4>Tu página</h4>
+      <p>Una dirección de internet propia que muestra tu copia. Cualquiera puede entrar.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--bien">
+    <strong>Lo importante de este dibujo</strong>
+    Las flechas van en un solo sentido. Lo que hagas en tu copia <strong>no afecta a la original</strong>. Puedes equivocarte todo lo que quieras: la página que hoy está en línea sigue igual. Por eso partimos con una copia y no con la original.
+  </div>
+
+  <p style="margin-top:16px">Y esta es la gracia de la copia: como es tuya, no le tienes que pedir permiso a nadie para cambiarla. Cuando te sientas cómoda, tu copia puede pasar a ser la oficial. Eso se explica al final, en <a href="#mover">cómo se mueven las cosas</a>.</p>
+</section>
+
+<!-- ===================== 2. CUENTA ===================== -->
+<section class="seccion" id="cuenta">
+  <div class="seccion__cab"><h2>Crea tu cuenta en GitHub</h2><span class="tiempo">5 min</span></div>
+  <p>GitHub es un sitio donde se guardan proyectos como este. Piénsalo como una carpeta en internet que guarda todas las versiones de lo que pongas adentro y que además puede publicarlo como página web. Es gratis.</p>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>Entra a <a href="https://github.com/signup">github.com/signup</a></h3>
+      <p>Sirve desde el celular o el computador. Te pide un correo, una contraseña y un nombre de usuario, en ese orden.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Elige bien el nombre de usuario</h3>
+      <p>Va a quedar en la dirección de tu página, así que conviene que sea corto y fácil de dictar por teléfono. Solo letras, números y guiones. Sin espacios, sin tildes, sin eñes.</p>
+      <p>Ejemplos que funcionan: <code>marite-paltas</code>, <code>paltasmarite</code>, <code>marite-melipilla</code>. Si el que quieres está ocupado, GitHub te lo dice al tiro.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Confirma el correo</h3>
+      <p>GitHub te manda un código al correo. Lo escribes y la cuenta queda lista. Si no llega, revisa la carpeta de spam.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--ojo">
+    <strong>Anota tu usuario y tu contraseña en un lugar seguro</strong>
+    Los vas a usar cada vez que quieras cambiar algo. Si GitHub te ofrece activar la verificación en dos pasos, acepta: es el mismo sistema del banco, te manda un código al celular cuando entras.
+  </div>
+
+  <div class="nota nota--gris">
+    <strong>Si quieres leer más</strong>
+    GitHub tiene un tutorial oficial en español para gente que nunca lo ha usado. Dice textualmente que no hace falta saber programar: <a href="https://docs.github.com/es/get-started/start-your-journey/hello-world">Hola mundo, guía de GitHub</a>. No es obligatorio, este tutorial se basta solo.
+  </div>
+</section>
+
+<!-- ===================== 3. COPIA (FORK) ===================== -->
+<section class="seccion" id="copia">
+  <div class="seccion__cab"><h2>Copia el proyecto a tu cuenta</h2><span class="tiempo">3 min</span></div>
+  <p>En GitHub, a un proyecto se le llama <strong>repositorio</strong>, y a sacar una copia a tu cuenta se le llama hacer un <strong>fork</strong>. Es un botón. La copia queda con todos los archivos y con todo el historial.</p>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>Con tu cuenta abierta, entra al proyecto original</h3>
+      <p>Está en <a href="https://github.com/MiguelRomanCL/paltasmarite">github.com/MiguelRomanCL/paltasmarite</a>. Arriba a la derecha hay un botón que dice <span class="tecla">Fork</span>.</p>
+
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/MiguelRomanCL/paltasmarite</div></div>
+        <div class="gh-top"><svg width="22" height="22" viewBox="0 0 16 16" fill="#fff" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></div>
+        <div class="gh-cuerpo">
+          <div class="gh-fila gh-fila--con-aqui" style="justify-content:space-between">
+            <span class="gh-repo"><span>MiguelRomanCL /</span> paltasmarite</span>
+            <span class="gh-fila">
+              <span class="gh-btn">Watch</span>
+              <span class="gh-btn aqui"><svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/></svg> Fork</span>
+              <span class="gh-btn">Star</span>
+            </span>
+          </div>
+          <div class="gh-archivos">
+            <div class="gh-archivo">Archivos del proyecto</div>
+            <div class="gh-archivo"><svg width="14" height="14" viewBox="0 0 16 16" fill="#54AEFF" aria-hidden="true"><path d="M1.75 1A1.75 1.75 0 0 0 0 2.75v10.5C0 14.216.784 15 1.75 15h12.5A1.75 1.75 0 0 0 16 13.25v-8.5A1.75 1.75 0 0 0 14.25 3H7.5a.25.25 0 0 1-.2-.1l-.9-1.2A1.75 1.75 0 0 0 5 1H1.75Z"/></svg>fotos</div>
+            <div class="gh-archivo"><svg width="14" height="14" viewBox="0 0 16 16" fill="#8B949E" aria-hidden="true"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Z"/></svg>datos.js</div>
+            <div class="gh-archivo"><svg width="14" height="14" viewBox="0 0 16 16" fill="#8B949E" aria-hidden="true"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Z"/></svg>index.html</div>
+            <div class="gh-archivo"><svg width="14" height="14" viewBox="0 0 16 16" fill="#8B949E" aria-hidden="true"><path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0 1 13.25 16h-9.5A1.75 1.75 0 0 1 2 14.25Z"/></svg>estilos.css</div>
+          </div>
+        </div>
+        <div class="pantalla__pie">Así se ve el proyecto original. El botón Fork es el que saca la copia.</div>
+      </div>
+      <div class="nota nota--gris"><strong>Si estás en el celular y no ves el botón</strong> Abre el menú del navegador y activa la opción "Versión para computador" o "Sitio de escritorio". Aparece todo.</div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Ponle un nombre distinto a tu copia</h3>
+      <p>Al apretar <span class="tecla">Fork</span> se abre un formulario. En <strong>Repository name</strong> viene escrito el nombre original. <strong>Cámbialo.</strong> Así nunca vas a confundir cuál es cuál, y queda claro que la tuya es una copia para trabajar.</p>
+      <p>Nombre sugerido: <code>mi-tienda-de-paltas</code>. Sin espacios, sin tildes, todo en minúscula.</p>
+
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/MiguelRomanCL/paltasmarite/fork</div></div>
+        <div class="gh-cuerpo">
+          <h4 style="font-family:inherit;font-size:1.1rem;margin-bottom:4px">Create a new fork</h4>
+          <p style="color:var(--gh-suave);font-size:.85rem">A fork is a copy of a repository.</p>
+          <div class="gh-campo"><label>Owner</label><span class="gh-input">tu-usuario</span></div>
+          <div class="gh-campo"><label>Repository name</label><span class="gh-input aqui" style="display:inline-block">mi-tienda-de-paltas</span></div>
+          <div class="gh-campo" style="margin-top:28px"><label>Description <span style="font-weight:400;color:var(--gh-suave)">(optional)</span></label><span class="gh-input" style="color:var(--gh-suave)">Mi copia para aprender y probar</span></div>
+          <div class="gh-radio" style="margin-top:14px"><i></i><span><b>Copy the main branch only</b><br><span style="color:var(--gh-suave)">Déjalo marcado, así viene.</span></span></div>
+          <div style="margin-top:16px"><span class="gh-btn gh-btn--verde">Create fork</span></div>
+        </div>
+        <div class="pantalla__pie">Cambia solo el nombre. Todo lo demás se deja como viene y se aprieta Create fork.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Aprieta <span class="tecla tecla--verde">Create fork</span></h3>
+      <p>Tarda unos segundos. Cuando termina, te lleva a tu copia. Fíjate en la dirección del navegador: ahora dice <strong>tu usuario</strong> y el nombre nuevo. Debajo del nombre aparece en chico "forked from MiguelRomanCL/paltasmarite", que es la manera de GitHub de recordar de dónde salió.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--bien">
+    <strong>Prueba de que funcionó</strong>
+    En la dirección del navegador se lee <code>github.com/tu-usuario/mi-tienda-de-paltas</code> y ves los mismos archivos que en la original: la carpeta fotos, datos.js, index.html y los demás.
+  </div>
+</section>
+
+<!-- ===================== 4. PUBLICAR (PAGES) ===================== -->
+<section class="seccion" id="publica">
+  <div class="seccion__cab"><h2>Publica tu copia en internet</h2><span class="tiempo">3 min, más la espera</span></div>
+  <p>Tu copia ya existe, pero por ahora solo se ve como una lista de archivos. Para que se vea como página web hay que prender una función de GitHub que se llama <strong>GitHub Pages</strong>. Se hace una sola vez y queda para siempre.</p>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>En tu copia, entra a <span class="tecla">Settings</span></h3>
+      <p>Es la última pestaña de la fila de arriba, con un engranaje. Si no la ves en el celular, activa la versión para computador.</p>
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/tu-usuario/mi-tienda-de-paltas</div></div>
+        <div class="gh-tabs">
+          <span class="gh-tab gh-tab--activa">Code</span><span class="gh-tab">Issues</span><span class="gh-tab">Pull requests</span><span class="gh-tab">Actions</span><span class="gh-tab">Projects</span><span class="gh-tab aqui" style="margin-bottom:22px">Settings</span>
+        </div>
+        <div class="pantalla__pie">Las pestañas de tu copia. Settings está al final.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>En el menú de la izquierda, busca <span class="tecla">Pages</span></h3>
+      <p>Está un poco abajo, en el grupo "Code and automation".</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Elige la rama <code>main</code> y guarda</h3>
+      <p>En "Build and deployment", donde dice <strong>Branch</strong>, hay un menú que dice "None". Cámbialo a <strong>main</strong>, deja la carpeta en <strong>/ (root)</strong> y aprieta <span class="tecla">Save</span>.</p>
+
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/tu-usuario/mi-tienda-de-paltas/settings/pages</div></div>
+        <div class="gh-cuerpo gh-menu">
+          <ul>
+            <li>General</li>
+            <li>Collaborators</li>
+            <li>Branches</li>
+            <li class="activo">Pages</li>
+            <li>Security</li>
+          </ul>
+          <div>
+            <h4 style="font-family:inherit;font-size:1.1rem">GitHub Pages</h4>
+            <p style="font-size:.85rem;color:var(--gh-suave);margin-top:4px">Build and deployment</p>
+            <div class="gh-campo"><label>Source</label><span class="gh-btn">Deploy from a branch ▾</span></div>
+            <div class="gh-campo"><label>Branch</label>
+              <span class="gh-fila gh-fila--con-aqui"><span class="gh-btn aqui">main ▾</span><span class="gh-btn">/ (root) ▾</span><span class="gh-btn gh-btn--verde">Save</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="pantalla__pie">Branch en main, carpeta en / (root), y Save.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">4</div>
+    <div class="paso__cuerpo">
+      <h3>Espera y recarga</h3>
+      <p>La primera publicación demora <strong>entre 1 y 10 minutos</strong>. Recarga la misma pantalla de Pages de vez en cuando. Cuando esté lista, arriba aparece un recuadro que dice <strong>"Your site is live at"</strong> seguido de tu dirección, con un botón <span class="tecla">Visit site</span>.</p>
+      <div class="pantalla">
+        <div class="gh-cuerpo">
+          <div class="gh-banner gh-banner--verde"><span>✓ Your site is live at <b>https://tu-usuario.github.io/mi-tienda-de-paltas/</b></span><span class="gh-btn">Visit site</span></div>
+        </div>
+        <div class="pantalla__pie">Esto es lo que ves cuando ya está publicada.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px">La dirección que te queda</h3>
+  <p>Se arma con tu usuario y el nombre que le pusiste a la copia:</p>
+  <div class="direccion">
+    <span>https://</span><b class="p1">tu-usuario</b><span>.github.io/</span><b class="p2">mi-tienda-de-paltas</b><span>/</span>
+  </div>
+  <div class="leyenda"><span><i style="background:var(--pulpa)"></i>tu nombre de usuario</span><span><i style="background:var(--cuesco)"></i>el nombre de tu copia</span></div>
+  <p style="margin-top:14px">Esa dirección la puedes mandar por WhatsApp, ponerla en Instagram y abrirla desde cualquier celular. Es una página real. La original de Miguel sigue en <a href="https://miguelromancl.github.io/paltasmarite/">miguelromancl.github.io/paltasmarite</a>, y las dos conviven sin problema.</p>
+
+  <div class="nota nota--bien">
+    <strong>Prueba de que funcionó</strong>
+    Abres tu dirección desde el celular y ves la tienda completa, con la palta con lentes arriba y los productos. Si ves una página de error 404, es que todavía no termina de publicarse: espera cinco minutos y vuelve a entrar.
+  </div>
+</section>
+
+<!-- ===================== 5. PRIMER CAMBIO ===================== -->
+<section class="seccion" id="cambio">
+  <div class="seccion__cab"><h2>Tu primer cambio: un precio</h2><span class="tiempo">3 min</span></div>
+  <p>Todo lo que vas a querer cambiar seguido (precios, textos, tu WhatsApp, qué producto se muestra) está en <strong>un solo archivo</strong>, que se llama <code>datos.js</code>. Los demás archivos son el motor y no se tocan.</p>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>En tu copia, haz clic en <code>datos.js</code></h3>
+      <p>Se abre el archivo para leerlo. Arriba a la derecha hay un lápiz. Es el botón <span class="tecla">Edit</span>.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Cambia el número</h3>
+      <p>Busca el producto que quieres cambiar y edita solo el número que va después de <code>precio:</code>. Sin puntos, sin signo peso.</p>
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/tu-usuario/mi-tienda-de-paltas/edit/main/datos.js</div></div>
+        <div class="gh-cuerpo">
+          <div class="gh-fila gh-fila--con-aqui" style="justify-content:space-between"><span style="font-family:var(--mono);font-size:.85rem">datos.js</span><span class="gh-btn gh-btn--verde aqui">Commit changes...</span></div>
+<div class="gh-codigo">    {
+      nombre: "Malla de paltas",
+      formato: "3 kilos",
+      detalle: "En distintos puntos de madurez.",
+      precio: <mark>7500</mark>,
+      foto: "malla-3kg.jpg",
+      disponible: true
+    },</div>
+        </div>
+        <div class="pantalla__pie">Cambias solo el número marcado. El resto queda igual.</div>
+      </div>
+      <div class="nota nota--ojo">
+        <strong>Las tres reglas para no romper el archivo</strong>
+        <ol>
+          <li>El texto va entre comillas: <code>"así"</code>.</li>
+          <li>Los precios van sin puntos ni signo peso: <code>7500</code>, no <code>$7.500</code>.</li>
+          <li>Cada línea termina en coma, menos la última de cada bloque.</li>
+        </ol>
+        Si dudas, compara con la línea de al lado y copia la forma.
+      </div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Guarda con <span class="tecla tecla--verde">Commit changes</span></h3>
+      <p>Aparece una ventanita que te pide describir el cambio. Escribe algo corto y en tus palabras: "subí el precio de la malla". Deja marcado "Commit directly to the main branch" y confirma.</p>
+      <div class="pantalla">
+        <div class="gh-cuerpo">
+          <div class="gh-modal">
+            <h4 style="font-family:inherit;font-size:1rem">Commit changes</h4>
+            <div class="gh-campo"><label>Commit message</label><span class="gh-input" style="display:block;font-family:inherit">subí el precio de la malla</span></div>
+            <div class="gh-radio"><i></i><span>Commit directly to the <b>main</b> branch</span></div>
+            <div class="gh-fila" style="margin-top:14px;justify-content:flex-end"><span class="gh-btn">Cancel</span><span class="gh-btn gh-btn--verde">Commit changes</span></div>
+          </div>
+        </div>
+        <div class="pantalla__pie">"Commit" es la palabra de GitHub para guardar dejando anotado qué cambiaste.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nota nota--bien">
+    <strong>Prueba de que funcionó</strong>
+    Espera un minuto, abre tu página y recarga. El precio nuevo ya está. No hay que publicar nada aparte: guardar en GitHub <strong>es</strong> publicar.
+  </div>
+
+  <h3 style="margin-top:28px">Lo otro que se cambia en ese mismo archivo</h3>
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th>Quieres</th><th>Buscas en datos.js</th><th>Y cambias</th></tr></thead>
+    <tbody>
+      <tr><td>Tu WhatsApp</td><td><code>whatsapp:</code></td><td>Tu número con 56 adelante, sin espacios: <code>"56912345678"</code></td></tr>
+      <tr><td>Esconder un producto</td><td><code>disponible: true</code></td><td>Cámbialo a <code>false</code>. Vuelve con <code>true</code>.</td></tr>
+      <tr><td>Agregar un producto</td><td>Un bloque entre <code>{</code> y <code>},</code></td><td>Cópialo completo, pégalo debajo y cambia sus datos.</td></tr>
+      <tr><td>Tu historia</td><td><code>historia:</code></td><td>El texto entre comillas. Dos párrafos se separan con <code>\n</code></td></tr>
+      <tr><td>Zonas de despacho</td><td><code>despacho:</code></td><td>Los textos de cada zona.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="margin-top:12px">Dentro del propio archivo hay comentarios en español al lado de cada cosa, explicando qué es. Y en tu copia viene una guía más larga, el archivo <code>COMO-EDITAR.md</code>.</p>
+</section>
+
+<!-- ===================== 6. FOTOS ===================== -->
+<section class="seccion" id="fotos">
+  <div class="seccion__cab"><h2>Sube tus fotos</h2><span class="tiempo">5 min</span></div>
+  <p>Las fotos de hoy son recortes de la ilustración de la marca. Se ven bien, pero una foto real de tus paltas vende más. Las fotos van en la carpeta <code>fotos</code> y cada una tiene un nombre que la página ya espera.</p>
+
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th>Nombre del archivo</th><th>Qué debe mostrar</th></tr></thead>
+    <tbody>
+      <tr><td><code>portada.jpg</code></td><td>La foto grande de arriba. Hoy es la ilustración del puesto.</td></tr>
+      <tr><td><code>palta-kilo.jpg</code></td><td>Un kilo de paltas como se lo entregas.</td></tr>
+      <tr><td><code>malla-3kg.jpg</code></td><td>La malla de 3 kilos armada.</td></tr>
+      <tr><td><code>caja-10kg.jpg</code></td><td>La caja de 10 kilos llena.</td></tr>
+      <tr><td><code>marite.jpg</code></td><td>Tú en el campo, entre los paltos. Esta hay que activarla, se explica abajo.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>Renombra la foto en tu celular antes de subirla</h3>
+      <p>Tiene que llamarse <strong>exactamente</strong> como dice la tabla, en minúscula, con su extensión. Si el archivo se llama <code>IMG_4021.jpg</code> o <code>Malla 3 Kg.JPG</code>, no va a aparecer. En la galería del celular, con mantener apretada la foto suele aparecer la opción de cambiar el nombre.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Entra a la carpeta <code>fotos</code> y aprieta <span class="tecla">Add file</span> → <span class="tecla">Upload files</span></h3>
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/tu-usuario/mi-tienda-de-paltas/tree/main/fotos</div></div>
+        <div class="gh-cuerpo">
+          <div class="gh-fila gh-fila--con-aqui" style="justify-content:space-between"><span class="gh-repo"><span>mi-tienda-de-paltas /</span> fotos</span><span class="gh-btn aqui">Add file ▾</span></div>
+          <div class="gh-zona">Drag files here to add them to your repository<br><span style="color:var(--gh-azul)">or choose your files</span></div>
+          <div style="margin-top:12px"><span class="gh-btn gh-btn--verde">Commit changes</span></div>
+        </div>
+        <div class="pantalla__pie">Arrastras la foto o la eliges desde el celular, y guardas con Commit changes.</div>
+      </div>
+      <p style="margin-top:12px">Si subes una foto con el mismo nombre que una que ya está, la nueva reemplaza a la vieja. Eso es justo lo que quieres.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Para tu foto en el campo, un paso más</h3>
+      <p>Hoy en esa sección va el dibujo de la marca. Después de subir <code>marite.jpg</code>, abre <code>datos.js</code>, busca el bloque <code>historia</code> y cambia la línea <code>foto: "marca.png"</code> por <code>foto: "marite.jpg"</code>. Guarda.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--ojo">
+    <strong>Que no pesen mucho</strong>
+    Una foto de celular puede pesar 5 MB y hace lenta la página. Antes de subirla, achícala en <a href="https://squoosh.app">squoosh.app</a>. Es gratis, funciona en el navegador y no hay que instalar nada. Deja cada foto en menos de 300 KB.
+  </div>
+
+  <div class="nota nota--gris">
+    <strong>Consejos para sacarlas</strong>
+    De día, con luz natural y nunca con flash. Acerca la cámara: que la palta llene la foto. Una palta cortada por la mitad vende más que diez enteras. Fondo simple: una tabla de madera, un paño, la tierra del campo.
+  </div>
+</section>
+
+<!-- ===================== 7. CODEX ===================== -->
+<section class="seccion" id="codex">
+  <div class="seccion__cab"><h2>Pídele cambios grandes a Codex</h2><span class="tiempo">10 min la primera vez</span></div>
+  <p>Cambiar un precio lo haces tú en dos minutos. Pero hay cosas más grandes, como agregar una sección de recetas o cambiar los colores, que sí requieren tocar el motor. Para eso existe <strong>Codex</strong>, un asistente de inteligencia artificial de la misma empresa de ChatGPT que sabe programar. Le escribes en español lo que quieres y lo hace.</p>
+  <p>Funciona entero en internet: no hay que instalar nada ni tener un computador prendido. Se conecta a tu copia en GitHub, hace el cambio y te lo deja <strong>propuesto</strong> para que tú lo apruebes. Nada se publica sin tu visto bueno.</p>
+
+  <div class="mapa" style="margin-top:20px">
+    <div class="mapa__caja mapa__caja--tu"><h4>Tú le pides</h4><p>En español, como un mensaje de WhatsApp.</p></div>
+    <div class="mapa__flecha"><svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true"><path d="M2 10h26M20 3l8 7-8 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="mapa__caja"><h4>Codex lo hace</h4><p>Y te muestra una propuesta, sin tocar tu página todavía.</p></div>
+    <div class="mapa__flecha"><svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true"><path d="M2 10h26M20 3l8 7-8 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="mapa__caja mapa__caja--web"><h4>Tú apruebas</h4><p>Un botón en GitHub. Un minuto después está publicado.</p></div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>Entra a <a href="https://chatgpt.com/codex">chatgpt.com/codex</a> y conecta tu GitHub</h3>
+      <p>Necesitas una cuenta de ChatGPT. La primera vez te pide permiso para conectarse a GitHub y elegir a qué repositorio puede entrar: elige <code>mi-tienda-de-paltas</code>. Eso se hace una sola vez.</p>
+      <div class="nota nota--ojo"><strong>Sobre el costo</strong> Codex viene con ChatGPT, pero no pude confirmar en qué planes está incluido y en cuáles es de pago. Revísalo antes de contar con él. Todo lo demás de este tutorial es gratis sin condiciones.</div>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Escríbele lo que quieres, con detalle</h3>
+      <p>Mientras más concreta seas, mejor sale. Di qué quieres, dónde y cómo debería verse.</p>
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">chatgpt.com/codex</div></div>
+        <div class="gh-cuerpo gh-chat">
+          <div class="gh-burbuja gh-burbuja--yo">Agrégale a la página una sección que se llame "Recetas con palta", después de la sección "Por qué estas paltas". Que tenga tres recetas cortas: guacamole, palta con huevo y pan con palta. Que se vea igual al resto de la página y que los textos queden en datos.js para que yo los pueda cambiar.</div>
+          <div class="gh-burbuja gh-burbuja--codex">Listo. Agregué la sección con las tres recetas en datos.js y los estilos correspondientes. Puedes revisar los cambios y crear el pull request.<br><span class="gh-fila" style="margin-top:8px"><span class="gh-btn">Ver cambios</span><span class="gh-btn gh-btn--verde">Create PR</span></span></div>
+        </div>
+        <div class="pantalla__pie">Un pedido bien hecho: dice qué, dónde, con qué contenido, y pide que quede editable.</div>
+      </div>
+      <p style="margin-top:12px">Otros pedidos que funcionan bien: "quiero que los botones sean café en vez de verdes", "pon un formulario para que dejen su correo", "haz que la foto de portada sea más chica en el celular".</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Aprueba la propuesta en GitHub</h3>
+      <p>Codex deja el cambio como un <strong>pull request</strong>, que es una propuesta de cambio esperando aprobación. En tu copia, en la pestaña <span class="tecla">Pull requests</span>, aparece con el nombre que le puso. Lo abres, y si estás de acuerdo, aprietas <span class="tecla tecla--verde">Merge pull request</span> y después <span class="tecla tecla--verde">Confirm merge</span>.</p>
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/tu-usuario/mi-tienda-de-paltas/pull/1</div></div>
+        <div class="gh-cuerpo">
+          <h4 style="font-family:inherit;font-size:1.05rem">Agregar sección de recetas con palta <span style="color:var(--gh-suave);font-weight:400">#1</span></h4>
+          <div class="gh-banner gh-banner--verde" style="margin-top:10px"><span>✓ This branch has no conflicts with the base branch</span></div>
+          <div class="gh-fila gh-fila--con-aqui" style="margin-top:12px"><span class="gh-btn gh-btn--verde aqui">Merge pull request</span></div>
+        </div>
+        <div class="pantalla__pie">"Merge" significa aceptar la propuesta y juntarla con tu página. Un minuto después está publicada.</div>
+      </div>
+      <p style="margin-top:12px">Si no te gusta lo que hizo, no lo apruebes. Vuelve a Codex y dile qué cambiar. Tu página no se toca hasta que tú aprietes Merge.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--gris">
+    <strong>Un consejo honesto</strong>
+    Para cambiar un precio, no uses Codex. Editar el archivo a mano son tres clics; con Codex son tres clics más una propuesta que revisar. Codex es para lo que no sabes hacer sola. Y si algo se pone difícil, Miguel puede hacerlo por ti en menos tiempo del que tardas en explicárselo a una máquina.
+  </div>
+</section>
+
+<!-- ===================== 8. SI ALGO SE ROMPE ===================== -->
+<section class="seccion" id="rompe">
+  <div class="seccion__cab"><h2>Si algo se rompe</h2><span class="tiempo">Lee esto antes de que pase</span></div>
+  <p>Se va a romper alguna vez. Es normal y no es grave, porque GitHub guarda todas las versiones anteriores. Nunca se pierde nada. Estas son las tres situaciones típicas.</p>
+
+  <div class="paso">
+    <div class="paso__n">1</div>
+    <div class="paso__cuerpo">
+      <h3>Me arrepentí antes de guardar</h3>
+      <p>Aprieta <span class="tecla">Cancel changes</span> en la pantalla de edición. No se guardó nada.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">2</div>
+    <div class="paso__cuerpo">
+      <h3>Guardé y ahora la página sale en blanco</h3>
+      <p>Casi seguro falta una coma o una comilla en <code>datos.js</code>. Abre el archivo, aprieta <span class="tecla">History</span> arriba a la derecha, y verás la lista de todas las versiones con la fecha y lo que escribiste al guardar. Haz clic en la anterior, mira cómo estaba esa línea, y corrige la tuya para que quede igual.</p>
+      <div class="pantalla">
+        <div class="pantalla__nav"><div class="pantalla__puntos"><i></i><i></i><i></i></div><div class="pantalla__url">github.com/tu-usuario/mi-tienda-de-paltas/commits/main/datos.js</div></div>
+        <div class="gh-cuerpo">
+          <div class="gh-archivos">
+            <div class="gh-archivo">Historial de datos.js</div>
+            <div class="gh-archivo"><span><b>subí el precio de la malla</b><br><span style="color:var(--gh-suave)">tú · hace 3 minutos</span></span></div>
+            <div class="gh-archivo" style="background:#F6F8FA"><span><b>cambié el número de WhatsApp</b><br><span style="color:var(--gh-suave)">tú · ayer</span></span><span class="gh-btn" style="margin-left:auto">Ver</span></div>
+            <div class="gh-archivo"><span><b>Primera versión de la página</b><br><span style="color:var(--gh-suave)">Miguel · la semana pasada</span></span></div>
+          </div>
+        </div>
+        <div class="pantalla__pie">Cada guardado queda anotado. Por eso importa escribir qué cambiaste.</div>
+      </div>
+      <p style="margin-top:12px">Truco más fácil todavía: pídele a Codex "deja datos.js exactamente como estaba en la versión anterior". Lo hace en un minuto.</p>
+    </div>
+  </div>
+
+  <div class="paso">
+    <div class="paso__n">3</div>
+    <div class="paso__cuerpo">
+      <h3>Aprobé algo de Codex y quedó feo</h3>
+      <p>Entra al pull request que aprobaste, en la pestaña Pull requests, filtro "Closed". Abajo tiene un botón <span class="tecla">Revert</span>. Te crea una nueva propuesta que deshace todo, la apruebas igual que la primera, y la página vuelve a como estaba.</p>
+    </div>
+  </div>
+
+  <div class="nota nota--bien">
+    <strong>Y siempre queda un salvavidas</strong>
+    La original de Miguel nunca se tocó. En el peor de los casos, borras tu copia y vuelves a hacer el fork desde cero. Son tres minutos.
+  </div>
+</section>
+
+<!-- ===================== 9. MOVER LAS COSAS ===================== -->
+<section class="seccion" id="mover">
+  <div class="seccion__cab"><h2>Cómo se mueven las cosas</h2><span class="tiempo">5 min de lectura</span></div>
+  <p>Aquí van las preguntas que aparecen después de la primera semana. Todas tienen respuesta corta.</p>
+
+  <h3 style="margin-top:20px">Miguel mejoró la original. ¿Cómo lo traigo a mi copia?</h3>
+  <p>Cuando la original tiene cambios que tu copia no tiene, GitHub te avisa en la página principal de tu copia con un mensaje que dice "This branch is 2 commits behind". Al lado hay un botón <span class="tecla">Sync fork</span> y dentro <span class="tecla tecla--verde">Update branch</span>. Lo aprietas y listo.</p>
+  <div class="pantalla">
+    <div class="gh-cuerpo">
+      <div class="gh-banner"><span>This branch is <b>2 commits behind</b> MiguelRomanCL/paltasmarite:main</span><span class="gh-btn" style="margin-left:auto">Sync fork ▾</span></div>
+    </div>
+    <div class="pantalla__pie">Así se ve el aviso. Traer los cambios no borra los tuyos.</div>
+  </div>
+  <div class="nota nota--ojo"><strong>Una sola situación complicada</strong> Si los dos cambiaron la misma línea del mismo archivo, GitHub no sabe con cuál quedarse y te lo dice. Ahí es más fácil avisarle a Miguel que resolverlo sola.</div>
+
+  <h3 style="margin-top:28px">Quiero que mi copia pase a ser la oficial</h3>
+  <p>No hay que "mover" nada. Tu copia ya tiene su propia dirección funcionando. Ser la oficial solo significa que esa es la dirección que le das a la gente. Cuando decidas eso:</p>
+  <ol>
+    <li>Empiezas a compartir tu dirección en vez de la de Miguel.</li>
+    <li>Si hay un dominio propio, como <code>paltasmarite.cl</code>, se apunta a tu copia. Eso se hace en Settings, Pages, donde dice <strong>Custom domain</strong>, y en el sitio donde se compró el dominio. Es una tarde de trabajo entre los dos, una sola vez.</li>
+    <li>Miguel puede archivar la suya o dejarla como respaldo. Da lo mismo.</li>
+  </ol>
+
+  <h3 style="margin-top:28px">Quiero hacer otra página distinta con esta misma base</h3>
+  <p>Esa es la gracia de todo esto. Haces <strong>otro fork</strong> con otro nombre, por ejemplo <code>mermeladas-de-la-tia</code>, y cambias los textos, las fotos y los productos en su <code>datos.js</code>. Es la misma tienda con otra ropa. Puedes tener todas las que quieras, cada una con su dirección.</p>
+
+  <h3 style="margin-top:28px">Quiero tener los archivos en mi computador</h3>
+  <p>En la página principal de tu copia, el botón verde <span class="tecla tecla--verde">Code</span> tiene la opción <strong>Download ZIP</strong>. Te baja la carpeta completa. Si haces doble clic en <code>index.html</code> se abre la página en tu navegador, aunque no tengas internet. Sirve para probar cambios sin publicarlos.</p>
+  <p>Ojo: lo que cambies en esa carpeta no se publica solo. Para publicarlo tienes que subir el archivo a GitHub con Add file, Upload files, igual que las fotos.</p>
+
+  <h3 style="margin-top:28px">Quiero trabajar desde el celular</h3>
+  <p>Todo lo de este tutorial funciona en el navegador del celular. Cuando algún botón no aparezca, activa "Versión para computador" en el menú del navegador. Y en el celular resulta cómodo tener dos pestañas abiertas: una con GitHub para editar, y otra con tu página para ver el resultado.</p>
+
+  <h3 style="margin-top:28px">Quiero que otra persona también pueda editar</h3>
+  <p>En Settings, <strong>Collaborators</strong>, escribes su nombre de usuario de GitHub y le llega una invitación. Desde ese momento puede editar igual que tú. Se la quitas desde el mismo lugar cuando quieras.</p>
+
+  <h3 style="margin-top:28px">Quiero cerrar la página un tiempo</h3>
+  <p>No borres nada. En Settings, Pages, donde elegiste la rama <code>main</code>, la vuelves a poner en <strong>None</strong>. La dirección deja de responder pero todos tus archivos siguen ahí. Para reabrirla, vuelves a elegir <code>main</code>.</p>
+</section>
+
+<!-- ===================== 10. LO QUE NUNCA SE SUBE ===================== -->
+<section class="seccion" id="nunca">
+  <div class="seccion__cab"><h2>Lo que nunca se sube</h2><span class="tiempo">1 min</span></div>
+  <p>Tu copia es <strong>pública</strong>: cualquiera puede ver sus archivos, aunque solo tú puedas cambiarlos. Es necesario que sea pública para que GitHub la publique gratis, y no es un problema porque todo lo que hay ahí es información que igual va en la página: productos, precios, tu WhatsApp, tus fotos.</p>
+  <p>Pero por lo mismo, hay cosas que no van ni en la página ni en los archivos, nunca:</p>
+  <ul>
+    <li>Contraseñas de cualquier cosa.</li>
+    <li>Tu RUT, tu cédula, tu dirección particular.</li>
+    <li>El número de tu cuenta bancaria.</li>
+    <li>Nombres, direcciones o teléfonos de tus clientes.</li>
+  </ul>
+  <div class="nota nota--ojo">
+    <strong>Los datos para transferir van por WhatsApp</strong>
+    En el mensaje privado con cada cliente, cuando confirmas el pedido. Por eso la página no los trae. Si alguna vez te dan ganas de "dejarlos puestos para que sea más rápido", no lo hagas.
+  </div>
+</section>
+
+<!-- ===================== 11. GLOSARIO ===================== -->
+<section class="seccion" id="glosario">
+  <div class="seccion__cab"><h2>Las palabras raras, explicadas</h2></div>
+  <div class="tabla-envoltura">
+  <table>
+    <thead><tr><th>Palabra</th><th>Qué significa en tu caso</th></tr></thead>
+    <tbody>
+      <tr><td>GitHub</td><td>El sitio donde viven los archivos de la página y desde donde se publica. Gratis.</td></tr>
+      <tr><td>Repositorio</td><td>Un proyecto guardado en GitHub. Para ti, la carpeta con la página.</td></tr>
+      <tr><td>Fork</td><td>Sacar una copia de un repositorio ajeno a tu propia cuenta. Lo hiciste una vez.</td></tr>
+      <tr><td>Commit</td><td>Guardar un cambio dejando anotado qué fue. Cada commit es una versión a la que se puede volver.</td></tr>
+      <tr><td>Rama, main</td><td>La versión "principal" del proyecto. Tú siempre trabajas en main. Las otras ramas las usa Codex para proponer cosas.</td></tr>
+      <tr><td>Pull request</td><td>Una propuesta de cambio esperando tu aprobación. Codex los crea; tú los apruebas o los rechazas.</td></tr>
+      <tr><td>Merge</td><td>Aceptar un pull request. Junta la propuesta con tu página.</td></tr>
+      <tr><td>GitHub Pages</td><td>La función que convierte tu repositorio en una página web con dirección propia.</td></tr>
+      <tr><td>Dominio</td><td>Una dirección corta y propia, como paltasmarite.cl. Se arrienda por año en NIC Chile y se apunta a tu página.</td></tr>
+      <tr><td>Codex</td><td>Un asistente de inteligencia artificial que programa por ti. Le hablas en español y te deja propuestas.</td></tr>
+      <tr><td>datos.js</td><td>El único archivo que editas seguido. Tiene productos, precios, textos y tu WhatsApp.</td></tr>
+      <tr><td>HTML, CSS</td><td>Los archivos del motor: el esqueleto de la página y su apariencia. No se tocan a mano; para cambiarlos se le pide a Codex o a Miguel.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ===================== 12. LISTA ===================== -->
+<section class="seccion" id="lista">
+  <div class="seccion__cab"><h2>Lista para ir marcando</h2></div>
+  <p>Las marcas se guardan en este navegador, así que puedes cerrar y seguir otro día.</p>
+  <ul class="checklist" id="checklist">
+    <li><label><input type="checkbox" id="c1"><span>Creé mi cuenta en GitHub y anoté el usuario y la contraseña</span></label></li>
+    <li><label><input type="checkbox" id="c2"><span>Hice el fork con el nombre mi-tienda-de-paltas</span></label></li>
+    <li><label><input type="checkbox" id="c3"><span>Activé GitHub Pages con la rama main</span></label></li>
+    <li><label><input type="checkbox" id="c4"><span>Abrí mi dirección desde el celular y se ve la tienda</span></label></li>
+    <li><label><input type="checkbox" id="c5"><span>Puse mi número de WhatsApp real en datos.js</span></label></li>
+    <li><label><input type="checkbox" id="c6"><span>Probé el botón Pedir por WhatsApp y me llegó el mensaje</span></label></li>
+    <li><label><input type="checkbox" id="c7"><span>Cambié un precio y lo vi actualizado en la página</span></label></li>
+    <li><label><input type="checkbox" id="c8"><span>Subí al menos una foto real</span></label></li>
+    <li><label><input type="checkbox" id="c9"><span>Escribí mi historia en datos.js</span></label></li>
+    <li><label><input type="checkbox" id="c10"><span>Le mandé mi dirección a alguien para que opine</span></label></li>
+    <li><label><input type="checkbox" id="c11"><span>Conecté Codex a mi copia y le pedí algo chico para probar</span></label></li>
+  </ul>
+</section>
+
+<footer class="pie">
+  <p>Este tutorial vive dentro del propio proyecto, en el archivo <code>tutorial.html</code>. Cuando hagas tu copia, se copia con ella y queda en <code>tu-usuario.github.io/mi-tienda-de-paltas/tutorial.html</code>. Si algo de aquí ya no calza con lo que ves en GitHub, es porque GitHub cambió algún botón de lugar: el paso sigue siendo el mismo.</p>
+</footer>
+
+</div>
+
+<script>
+// Guarda las marcas de la lista en este navegador. Si no se puede, no pasa nada.
+(function () {
+  var cajas = document.querySelectorAll('#checklist input[type="checkbox"]');
+  var CLAVE = 'paltas-marite-tutorial';
+  var guardado = {};
+  try { guardado = JSON.parse(localStorage.getItem(CLAVE) || '{}'); } catch (e) {}
+  cajas.forEach(function (c) {
+    if (guardado[c.id]) c.checked = true;
+    c.addEventListener('change', function () {
+      guardado[c.id] = c.checked;
+      try { localStorage.setItem(CLAVE, JSON.stringify(guardado)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>

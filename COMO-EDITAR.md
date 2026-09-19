@@ -3,6 +3,10 @@
 Guía para Marité. No necesitas saber programar. Todo lo que vas a cambiar
 está en un solo archivo.
 
+> ¿Quieres tener tu propia copia en tu cuenta de GitHub y manejarla tú?
+> Abre `tutorial.html`, o en línea:
+> https://miguelromancl.github.io/paltasmarite/tutorial.html
+
 ---
 
 ## Lo primero: qué es cada archivo
